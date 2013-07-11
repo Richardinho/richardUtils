@@ -13,17 +13,15 @@ files = [
   REQUIRE,
   REQUIRE_ADAPTER,
 
-  {pattern: 'lib/**/*.js', included: false},
-  {pattern: 'version2/**/*.js', included: false},
-  {pattern: 'test2/**/*Spec.js', included: false},
+  {pattern: 'test/**/*Spec.js', included: false},
+  {pattern: 'src/**/*.js', included: false},
 
-  'test2/test-main.js'
+  'test/test-main.js'
 ];
 
 
 // list of files to exclude
 exclude = [
-    'version2/bootstrap.js'
 ];
 
 
