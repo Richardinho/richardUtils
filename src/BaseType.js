@@ -11,7 +11,7 @@ define(function () {
 
     return {
 
-        extend : function (template) {
+        extend : function (template, staticMembers) {
 
             var F = function(options) {
 
@@ -33,6 +33,13 @@ define(function () {
             }
 
             F.extend = this.extend;
+
+            for (var prop in staticMembers) {
+
+                if(staticMembers.hasOwnProperty(prop)) {
+                    F[prop] = staticMembers[prop];
+                }
+            }
 
             return F;
         }
