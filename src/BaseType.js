@@ -41,6 +41,8 @@ define(function () {
                 }
             }
 
+            F.prototype.constructor = F;
+
             return F;
         }
     };
