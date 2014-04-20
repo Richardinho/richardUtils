@@ -5,6 +5,7 @@
 
 define([ 'enhancedObject' ], function( createProxy ) {
 
+
     describe('Given an object with nested objects has been event enhanced', function() {
 
         var foo, proxy;

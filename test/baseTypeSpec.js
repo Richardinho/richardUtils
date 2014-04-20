@@ -1,4 +1,4 @@
-define(['BaseType'], function(BaseType) {
+define(['src/BaseType'], function(BaseType) {
 
     describe('BaseType test', function() {
         var foo,
