@@ -34,10 +34,10 @@ define(function () {
 
             F.extend = this.extend;
 
-            for (var prop in staticMembers) {
+            for (var staticMember in staticMembers) {
 
-                if(staticMembers.hasOwnProperty(prop)) {
-                    F[prop] = staticMembers[prop];
+                if(staticMembers.hasOwnProperty(staticMember)) {
+                    F[prop] = staticMembers[staticMember];
                 }
             }
 
