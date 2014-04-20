@@ -1,7 +1,8 @@
 Javascript utility code
 ######################
-event handling enhanced objects
--------------------------------
+
+proxy object with event handling capabilities
+---------------------------------------------
 
 #### intro
 This code provides a single function which takes a javascript object, which may have nested objects as properties, and adds event handling methods to it which
@@ -12,7 +13,7 @@ I propose a use case for this structure to be as a model for an application wher
 concerned with, but also communicate with other parts of the application by firing events on the model. This removes the need
 for extra complex event handling code to be written.
 
-#### Usage:
+#### usage
 
 Pass a plain old javacsript object to the `createProxyObj()` function. This returns a proxy object on which you can set and get propeties in exactly the same way as you would with a normal object.
 
@@ -54,7 +55,7 @@ changes.
 Listeners also listen to changes occurring on descendant nodes. The code:  `pojso.vehicles.cars.bugatti = "a new bugatti";`  would
 also result in the handler listening to change events on the root node being called.
 
-####custom events
+#####custom events
 Change events are fired automatically when a property is updated. It is also possible to manually trigger events on an object. There are 3 distinct
 ways of triggering and event on an object. the basic command `trigger()` triggers an event on an object and only on that object. Only listeners
 for that event directly registered on that object will be called. Calling `fire()` will trigger an event on that object, but the event will 'bubble up'
@@ -74,7 +75,7 @@ to all parent objects and called registered listeners on those. Finally, `broadc
     //  handler will be called with arg1 and arg2 passed to it.
     pojso.broadcast("blah", "arg1", "arg2")
 
-####Adding additional objects as properties to proxy after it has been created
+#####Adding additional objects as properties to proxy after it has been created
 
 It is possible to add new object properties to the proxy object and have the event handling methods automatically become bound to the new properties.
 
