@@ -7,8 +7,6 @@ define(function () {
     */
 
     /* todo:
-       1. write some pretty rigorous tests for this.
-       2. refactor, tidy up, correct mistakes etc.
        3. investigate current status of Proxy type.
        4. work into an actual software project to see it working 'live'
        5. write up as blog post.
@@ -115,7 +113,7 @@ define(function () {
 
         },
 
-    // could pass through the event target, the object the event occurred on
+        // could pass through the event target, the object the event occurred on
         fire : function () {
 
 
@@ -177,42 +175,3 @@ define(function () {
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

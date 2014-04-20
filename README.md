@@ -9,13 +9,17 @@ This code provides a single function which takes a javascript object, which may 
 enable events to be fired on objects and handlers to be registered that will listen to these events. Events can also be made to propagate both up and down
 the object tree allowing, for example, events fired on a leaf node to be listened to by a handler that is registered on the root node.
 
-I propose a use case for this structure to be as a model for an application whereby components can register listeners to those part of the model that they are
+I propose a use case for this structure to be as a model for an application whereby components can register listeners to those parts of the model that they are
 concerned with, but also communicate with other parts of the application by firing events on the model. This removes the need
 for extra complex event handling code to be written.
 
 #### usage
 
-Pass a plain old javacsript object to the `createProxyObj()` function. This returns a proxy object on which you can set and get propeties in exactly the same way as you would with a normal object.
+The code is supplied as a Require AMD module. The module returns a function which you can call whatever you like. For the purposes of this article
+it is called 'createProxyObj'.
+
+Pass a plain old javascript object to the `createProxyObj()` function. This returns a proxy object on which you can set and get properties
+ in exactly the same way as you would with a normal object.
 
 
     var pojso = {
@@ -49,15 +53,14 @@ In addition to this, you can register a listener on an object which will be call
 
 `on()` is called on a proxy object and is passed the name of the event to listen to, the handler function that will run when that
 event occurs, and a context which will provide the value of 'this' within the handler function. When the above code runs, the text
-'this is bar' will be printed to the console. Handler might do something more interesting such as rendering  a view in response to model
-changes.
+'this is bar' will be printed to the console.
 
 Listeners also listen to changes occurring on descendant nodes. The code:  `pojso.vehicles.cars.bugatti = "a new bugatti";`  would
 also result in the handler listening to change events on the root node being called.
 
 #####custom events
 Change events are fired automatically when a property is updated. It is also possible to manually trigger events on an object. There are 3 distinct
-ways of triggering and event on an object. the basic command `trigger()` triggers an event on an object and only on that object. Only listeners
+ways of triggering an event on an object. the basic command `trigger()` triggers an event on - and only on - that object. Only listeners
 for that event directly registered on that object will be called. Calling `fire()` will trigger an event on that object, but the event will 'bubble up'
 to all parent objects and called registered listeners on those. Finally, `broadcast()` will trigger an event on an object and all descendent objects.
 
@@ -77,7 +80,8 @@ to all parent objects and called registered listeners on those. Finally, `broadc
 
 #####Adding additional objects as properties to proxy after it has been created
 
-It is possible to add new object properties to the proxy object and have the event handling methods automatically become bound to the new properties.
+It is possible to add new object properties to the proxy object after it has been created. Event handling methods will be automatically
+attached to them.
 
     proxy.on("hello", helloHandler);
 
@@ -96,11 +100,12 @@ It is possible to add new object properties to the proxy object and have the eve
 
 ####Under the hood
 This code makes use of the javscript Proxy() type which allows you to intercept various standard
-javascript actions such as setting or getting a property on an object and provide your own custom code to carry them out. In my code, what happens
+javascript object behaviours such as setting or getting a property and inject your own custom code to carry them out. In my code, what happens
 is that the set action is intercepted, the proposed new value is inspected, and if it is found to be an object, the event handling methods are mixed
 into it.
 
 Proxy is still experimental technology and unfortunately,  is, to date (April 2014), only available in the Firefox browser. It is therefore not
-recommended that this code is used in any production environment!
+recommended that this code is used in any production environment! I would be interested in hearing if anyone knows about current plans in IE, Chrome
+for implementing the Proxy function.
 
 
