@@ -1,7 +1,9 @@
-
+Javascript utility code
+######################
 event handling enhanced objects
 -------------------------------
 
+#### intro
 This code provides a single function which takes a javascript object, which may have nested objects as properties, and adds event handling methods to it which
 enable events to be fired on objects and handlers to be registered that will listen to these events. Events can also be made to propagate both up and down
 the object tree allowing, for example, events fired on a leaf node to be listened to by a handler that is registered on the root node.
@@ -48,3 +50,23 @@ In addition to this, you can register a listener on an object which will be call
 event occurs, and a context which will provide the value of 'this' within the handler function. When the above code runs, the text
 'this is bar' will be printed to the console. Handler might do something more interesting such as rendering  a view in response to model
 changes.
+
+Listeners also listen to changes occurring on descendant nodes. The code:  `pojso.vehicles.cars.bugatti = "a new bugatti";`  would
+also result in the handler listening to change events on the root node being called.
+
+####custom events
+Change events are fired automatically when a property is updated. It is also possible to manually trigger events on an object. There are 3 distinct
+ways of triggering and event on an object. the basic command `trigger()` triggers an event on an object and only on that object. Only listeners
+for that event directly registered on that object will be called. Calling `fire()` will trigger an event on that object, but the event will 'bubble up'
+to all parent objects and called registered listeners on those. Finally, `broadcast()` will trigger an event on an object and all descendent objects.
+
+####Under the hood
+This code makes use of the javscript Proxy() type which allows you to intercept various standard
+javascript actions such as setting or getting a property on an object and provide your own custom code to carry them out. In my code, what happens
+is that the set action is intercepted, the proposed new value is inspected, and if it is found to be an object, the event handling methods are mixed
+into it.
+
+Proxy is still experimental technology and unfortunately,  is, to date (April 2014), only available in the Firefox browser. It is therefore not
+recommended that this code is used in any production environment!
+
+
