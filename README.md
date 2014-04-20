@@ -60,6 +60,39 @@ ways of triggering and event on an object. the basic command `trigger()` trigger
 for that event directly registered on that object will be called. Calling `fire()` will trigger an event on that object, but the event will 'bubble up'
 to all parent objects and called registered listeners on those. Finally, `broadcast()` will trigger an event on an object and all descendent objects.
 
+    /* fire() */
+    //  register a handler on the root node for the 'bar' event
+    pojso.on("bar", foo.myHandlerFunction, foo);
+
+    //  handler will be called and arg1 and arg2 will be passed to it.
+    pojso.vehicles.cars.fire("bar", "arg1", "arg2");
+
+    /* broadcast() */
+    //  register a handler on a descendant object of the root
+    pojso.vehicles.cars.on("blah", foo.myhandlerFunction , foo);
+
+    //  handler will be called with arg1 and arg2 passed to it.
+    pojso.broadcast("blah", "arg1", "arg2")
+
+####Adding additional objects as properties to proxy after it has been created
+
+It is possible to add new object properties to the proxy object and have the event handling methods automatically become bound to the new properties.
+
+    proxy.on("hello", helloHandler);
+
+    //  add tractors object as a new property of proxy.vehicles.
+    proxy.vehicles.tractors = {
+        "massyFerguson" : "massyFerguson",
+        "johnDeer" : "johnDeer",
+        others : {
+            another : "another tractor"
+        }
+    }
+
+    proxy.vehicles.tractors.fire("hello"); //  helloHandler will be called automatically at this point.
+
+
+
 ####Under the hood
 This code makes use of the javscript Proxy() type which allows you to intercept various standard
 javascript actions such as setting or getting a property on an object and provide your own custom code to carry them out. In my code, what happens
