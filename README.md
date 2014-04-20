@@ -1,5 +1,5 @@
 Javascript utility code
-######################
+=======================
 
 proxy object with event handling capabilities
 ---------------------------------------------
