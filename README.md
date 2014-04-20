@@ -1,9 +1,9 @@
-utility javascript
-
-
+Javascript Utility Code
+=======================
 
 
 event handling enhanced objects
+-------------------------------
 
 This code provides a single function which takes a javascript object, which may have nested objects as properties, and adds event handling methods to it which
 enable events to be fired on objects and handlers to be registered that will listen to these events. Events can also be made to propagate both up and down
