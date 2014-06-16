@@ -109,3 +109,8 @@ recommended that this code is used in any production environment! I would be int
 for implementing the Proxy function.
 
 
+#####Running Tests
+
+tests for the proxied object are in test.html. This has to be run from a server in order to work, and, of course, viewed using the Firefox Browser.
+
+
