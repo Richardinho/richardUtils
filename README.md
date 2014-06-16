@@ -28,13 +28,13 @@ Pass a plain old javascript object to the `createProxyObj()` function. This retu
             cars : { fiesta : "my fiesta", bugatti : "a bugatti"}
         }
     }
-    var proxiedObj = createProxyObj(pojso);
+    var proxy = createProxyObj(pojso);
 
     // set a property value
-    pojso.vehicles.cars.fiesta = "a new fiesta";
+    proxy.vehicles.cars.fiesta = "a new fiesta";
 
     //  prints out 'a new fiesta'
-    console.log(proxiedObj.vehicles.cars.fiesta);
+    console.log(proxy.vehicles.cars.fiesta);
 
 In addition to this, you can register a listener on an object which will be called whenever a property value changes.
 
@@ -45,8 +45,8 @@ In addition to this, you can register a listener on an object which will be call
         },
         bar : "this is bar"
     }
-    pojso.on("change", foo.myHandlerFunction, foo);
-    pojso.name = "Bob";
+    proxy.on("change", foo.myHandlerFunction, foo);
+    proxy.name = "Bob";
 
 
 
@@ -66,17 +66,17 @@ to all parent objects and called registered listeners on those. Finally, `broadc
 
     /* fire() */
     //  register a handler on the root node for the 'bar' event
-    pojso.on("bar", foo.myHandlerFunction, foo);
+    proxy.on("bar", foo.myHandlerFunction, foo);
 
     //  handler will be called and arg1 and arg2 will be passed to it.
-    pojso.vehicles.cars.fire("bar", "arg1", "arg2");
+    proxy.vehicles.cars.fire("bar", "arg1", "arg2");
 
     /* broadcast() */
     //  register a handler on a descendant object of the root
-    pojso.vehicles.cars.on("blah", foo.myhandlerFunction , foo);
+    proxy.vehicles.cars.on("blah", foo.myhandlerFunction , foo);
 
     //  handler will be called with arg1 and arg2 passed to it.
-    pojso.broadcast("blah", "arg1", "arg2")
+    proxy.broadcast("blah", "arg1", "arg2")
 
 #####Adding additional objects as properties to proxy after it has been created
 
