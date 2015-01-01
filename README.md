@@ -4,8 +4,18 @@ Javascript utility code
 Draggable
 ---------
 
+#### intro
 A constructor function for creating Draggable objects which encapsulate div elements which can be dragged around the viewport using the mouse.
 Callbacks can be passed to the constructor for custom functionality.
+
+#### usage
+dfdfdfd dfd
+
+#####custom behaviour using callbacks
+sdefdfdf
+
+#### use with proxy object
+dfdfdf
 
 
 proxy object with event handling capabilities
@@ -20,7 +30,6 @@ concerned with, but also communicate with other parts of the application by firi
 for extra complex event handling code to be written.
 
 #### usage
-
 The code is supplied as a Require AMD module. The module returns a function which you can call whatever you like. For the purposes of this article
 it is called 'createProxyObj'.
 
