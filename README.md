@@ -1,6 +1,13 @@
 Javascript utility code
 =======================
 
+Draggable
+---------
+
+A constructor function for creating Draggable objects which encapsulate div elements which can be dragged around the viewport using the mouse.
+Callbacks can be passed to the constructor for custom functionality.
+
+
 proxy object with event handling capabilities
 ---------------------------------------------
 
