@@ -56,6 +56,7 @@ define([ 'enhancedObject' ], function( createProxy ) {
             describe("When a DESCENDANT node is updated", function () {
 
                 beforeEach(function () {
+
                     proxy.cars.bikes['honda'] = 'honda';
 
                 });
