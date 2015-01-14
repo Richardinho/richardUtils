@@ -1,20 +1,31 @@
+    var Promise = require('./Promise.js');
+
+    "use strict";
 
 
+    var promise = new Promise(function(fulfil, reject){
+        setTimeout(fulfil, 1000, "apple");
 
-
-var promise = new Promise(function (fulfill, reject) {
-    fulfill("gently to the sea");
-});
-
-function success(arg) {
-    var prom = new Promise(function (fulfill, reject) {
-        reject("rejection");
     });
-    return prom;
-}
 
-function err(arg) {
-    console.log("error", arg);
-}
+    promise.then(function (arg) {
 
-//promise.then(success, err).then(success, err);
+        var prom = new Promise();
+        setTimeout(function() {
+            prom.reject("hellellel");
+        }, 1000);
+        return prom;
+
+    }).then(function() {
+
+        console.log(arguments);
+    }, function() {
+
+        console.log("reject", arguments);
+
+    });
+
+
+
+
+
