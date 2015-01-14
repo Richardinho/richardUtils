@@ -1,6 +1,6 @@
 
 (function () {
-
+    "use strict";
 
     function Promise(init) {
 
@@ -58,23 +58,37 @@
             promise.state = x.state;
             return;
         }
+        var resolveRejectCalled = false;
+        //  If both resolvePromise and rejectPromise are called, or multiple calls to the same argument
+        //  are made, the first call takes precedence, and any further calls are ignored.
         function resolvePromise(y) {
-            //  If/when resolvePromise is called with a value y, run [[Resolve]](promise, y).
-            Promise.resolve(promise, y);
-
+            if(!resolveRejectCalled) {
+                //  If/when resolvePromise is called with a value y, run [[Resolve]](promise, y).
+                Promise.resolve(promise, y);
+                resolveRejectCalled = true;
+            }
         }
 
         function rejectPromise(r) {
-            //  If/when rejectPromise is called with a reason r, reject promise with r.
-            promise.reject(r);
+            if(!resolveRejectCalled) {
+                //  If/when rejectPromise is called with a reason r, reject promise with r.
+                promise.reject(r);
+                resolveRejectCalled = true;
+            }
         }
 
         if (Promise.isObject(x)) {
-            //  todo: put in some error handling as per spec.
             var then = x.then;
-
-            then.call(x, resolvePromise, rejectPromise);
-
+            //  If calling then throws an exception e,
+            try {
+                then.call(x, resolvePromise, rejectPromise);
+            } catch(e) {
+                //  If resolvePromise or rejectPromise have been called, ignore it.
+                if(!resolveRejectCalled) {
+                    //  Otherwise, reject promise with e as the reason.
+                    promise.reject(e);
+                }
+            }
 
         } else {
             promise.fulfil(x);

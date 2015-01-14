@@ -1,3 +1,4 @@
+    var Q = require('q');
     var Promise = require('./Promise.js');
 
     "use strict";
@@ -68,7 +69,7 @@
     promise = new Promise(function (fulfil, reject) {
         setTimeout(function () {
             reject("aberdeen");
-        }, 10000);
+        }, 1000);
     });
 
     function foo() {
@@ -90,6 +91,24 @@
     promise.then(foo)
            .then(bar)
            .then(complete, handleErrors)
+
+    //  7. interoperability with q promises
+
+    promise = new Promise(function(fulfil) {
+        setTimeout(fulfil, 10, "#7 initial promise fulfilled");
+    });
+    promise.then(function(){
+        console.log("#7 first then", arguments);
+        var deferred = Q.defer();
+        setTimeout(function () {
+            deferred.resolve("resolving q");
+        }, 10);
+        return deferred.promise;
+    }, function () {
+        console.log("#7 rejected", arguments);
+    }).then(function () {
+        console.log("#7: last then: ", arguments);
+    });
 
 
 
