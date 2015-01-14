@@ -1,6 +1,15 @@
 Javascript utility code
 =======================
 
+
+Promises Promises
+---------
+
+An implementation of the Promises/A+ specification. [Promises/A+ specification][].
+Works both as a Node module and in the browser.
+
+[Promises/A+ specification]: https://github.com/promises-aplus/promises-spec
+
 Draggable
 ---------
 
