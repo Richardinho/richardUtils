@@ -1,33 +1,25 @@
 {
-    "name": "richardUtils",
+  "name": "richardUtils",
+  "version": "0.0.0",
+  "description": "utility javascript code",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Richardinho/richardUtils.git"
+  },
+  "keywords": [
+    "utility",
+    "base type",
+    "event emitters"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-karma": "~0.4.4",
+    "grunt-jsdoc": "~0.6.7",
+    "grunt-contrib-clean": "~0.6.0"
+  },
+  "author": "Richard Hunter",
+  "license": "MIT",
+  "readmeFilename": "README.md"
 
-    "version": "0.0.0",
-
-    "description": "utility javascript code",
-
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Richardinho/richardUtils.git"
-    },
-
-    "keywords": [
-        "utility",
-        "base type",
-        "event emitters"
-    ],
-
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-contrib-jshint": "~0.6.0",
-        "grunt-karma" : "~0.4.4",
-        "grunt-jsdoc" : "~0.6.7",
-        "grunt-contrib-clean" : "~0.6.0"
-
-    },
-
-    "author": "Richard Hunter",
-
-    "license": "MIT",
-
-    "readmeFilename": "README.md"
 }
