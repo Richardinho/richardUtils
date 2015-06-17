@@ -1,16 +1,21 @@
+
 define(function () {
 
-    /*
-        Basetype.extend() returns a constructor function. The constructor function has
-        it's prototype configured using the template object passed in to extend().If
-        the template has an initialise() method this will be called automatically
-        with arguments passed in from the constructor function. The constructor
-        function itself has the extend() method as a static method so that
-        it can be used to implement inheritance.
-    */
 
-    return {
 
+    /**
+     * This modules provides a means to implement inheritance
+     * @author Richard Hunter <richard@richardhunter.co.uk>
+     * @exports BaseType
+     */
+    var BaseType =  {
+
+        /**
+         * extends method for inheritance
+         * @param {Object} template - properties to be added to prototype of new type
+         * @param {Object} staticMembers - static members of new type
+         * @returns {Function} Constructor function of new type
+         */
         extend : function (template, staticMembers) {
 
             var F = function(options) {
@@ -46,6 +51,8 @@ define(function () {
             return F;
         }
     };
+
+    return BaseType;
 
 });
 
