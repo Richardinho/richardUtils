@@ -1,20 +1,45 @@
 Javascript utility code
 =======================
 
+
+Promises Promises
+---------
+
+An implementation of the Promises/A+ specification. [Promises/A+ specification][].
+Works both as a Node module and in the browser.
+Interoperable with other Promises/A+ compatible libraries (e.g. q).
+
+[Promises/A+ specification]: https://github.com/promises-aplus/promises-spec
+
+Draggable
+---------
+
+#### intro
+A constructor function for creating Draggable objects which encapsulate div elements which can be dragged around the viewport using the mouse.
+Callbacks can be passed to the constructor for custom functionality.
+
+#### usage
+dfdfdfd dfd
+
+#####custom behaviour using callbacks
+sdefdfdf
+
+#### use with proxy object
+dfdfdf
+
+
 proxy object with event handling capabilities
 ---------------------------------------------
 
 #### intro
-This code provides a single function which takes a javascript object, which may have nested objects as properties, and adds event handling methods to it which
-enable events to be fired on objects and handlers to be registered that will listen to these events. Events can also be made to propagate both up and down
-the object tree allowing, for example, events fired on a leaf node to be listened to by a handler that is registered on the root node.
+Enhances a javascript object by providing event handler registration capability. Events can be fired on a property which handlers for descendant or parent properties
+can respond to.
 
 I propose a use case for this structure to be as a model for an application whereby components can register listeners to those parts of the model that they are
 concerned with, but also communicate with other parts of the application by firing events on the model. This removes the need
 for extra complex event handling code to be written.
 
 #### usage
-
 The code is supplied as a Require AMD module. The module returns a function which you can call whatever you like. For the purposes of this article
 it is called 'createProxyObj'.
 

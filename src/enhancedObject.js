@@ -1,4 +1,6 @@
-define(function () {
+
+
+(function () {
 
     /*
       experimental code to allow the creation of objects which can have event handlers attached to them with bubbling and broadcasting functionality supported.
@@ -118,6 +120,8 @@ define(function () {
 
 
             this.trigger.apply(this, arguments);
+
+            console.log(this.parent);
             if(this.parent) {
                 this.parent.fire.apply(this.parent, arguments);
             }
@@ -129,6 +133,8 @@ define(function () {
 
         // intercepts property assignment on an object
         set : function (target, name, value) {
+
+            console.log("set", name, value);
 
             if(name === 'parent' || name === 'listeners' || isFunction(value)) {
                 target[name] = value;
@@ -146,6 +152,8 @@ define(function () {
             }
             //  primitive types are just assigned normally. We fire a change event.
             else {
+
+                console.log("fire", value);
                 target[name] = value;
                 target.fire("change", value);
             }
@@ -154,6 +162,7 @@ define(function () {
 
 
     function proxyUpObj(obj) {
+        console.log("proxy up object");
 
         var proxy = new Proxy({}, handler);
 
@@ -171,7 +180,10 @@ define(function () {
         return proxy;
     }
 
-    return proxyUpObj;
+    if(typeof define !== 'undefined') {
+        define(proxyUpObj);
+    } else {
+        window.proxyUpObj = proxyUpObj;
+    }
 
-
-});
+})();
