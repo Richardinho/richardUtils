@@ -1,7 +1,7 @@
 
 define(function () {
 
-
+    "use strict";
 
     /**
      * This modules provides a means to implement inheritance
