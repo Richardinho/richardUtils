@@ -57,7 +57,7 @@
 					handler({
 						target : target,
 						currentTarget, el
-					}));
+					});
 				}
 			});
 		}
