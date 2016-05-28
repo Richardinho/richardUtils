@@ -11,7 +11,9 @@ files = [
   JASMINE,
   JASMINE_ADAPTER,
   'src/BaseType.js',
-  'test/baseTypeSpec.js'
+  'src/dom.js',
+  'test/baseTypeSpec.js',
+  'test/domSpec.js'
 ];
 
 

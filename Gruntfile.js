@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+    "use strict";
 
     grunt.initConfig({
 
@@ -17,6 +18,17 @@ module.exports = function(grunt) {
         },
 
         jshint: {
+
+            options : {
+                jshintrc : '.jshintrc',
+                ignores : [
+                    'src/deferredTest/**/*.js',
+                    'src/promises/**/*.js',
+                    'src/Draggable.js',
+                    'src/enhancedObject.js',
+                    'src/eventNode.js'
+                ]
+            },
             all: ['Gruntfile.js', 'src/**/*.js']
         },
 
