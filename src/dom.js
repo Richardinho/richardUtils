@@ -57,7 +57,8 @@
 					handler({
 						target : target,
 						currentTarget: el,
-						preventDefault : event.preventDefault.bind(event)
+						preventDefault : event.preventDefault.bind(event),
+						which : event.which
 					});
 				}
 			});
