@@ -54,7 +54,10 @@
 				var target = dom.searchAncestors(event.target, targetSelector, event.currentTarget);
 				if(target) {
 					// how to create synthetic event as if it occurred on this target?
-					handler(event);
+					handler({
+						target : target,
+						currentTarget, el
+					}));
 				}
 			});
 		}
