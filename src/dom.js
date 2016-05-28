@@ -26,19 +26,25 @@
 
 		//  condition is either a selector string or a function as per strategy pattern
 		searchAncestors : function (descendant, condition, ancestor){
-			var parent = descendant.parentNode;
+			var parent = descendant.parentNode,
+			    conditionFunc;
+
 			if(isString(condition)) {
-				if(matches(descendant, condition)) {
-					return descendant;
-				} else if(parent === null) {
-					return false;
-				} else if(parent === ancestor) {
-					return matches(parent, condition);
-				} else {
-					return dom.searchAncestors(parent, condition, ancestor);
+				conditionFunc = function (el) {
+					return matches(el, condition);
 				}
-			} else if(isFunction(condition)) {
-				// allow user to supply a function which carries out the test on the current node
+			} else {
+				conditionFunc = condition;
+			}
+
+			if(conditionFunc(descendant)) {
+				return descendant;
+			} else if(parent === null) {
+				return false;
+			} else if(parent === ancestor) {
+				return conditionFunc(parent) ? parent : false;
+			} else {
+				return dom.searchAncestors(parent, condition, ancestor);
 			}
 		},
 
