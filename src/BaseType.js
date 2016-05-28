@@ -1,5 +1,4 @@
-
-define(function () {
++function () {
 
     "use strict";
 
@@ -52,8 +51,14 @@ define(function () {
         }
     };
 
-    return BaseType;
+		if (window.define) {
+				define(function () {
+				    return BaseType;
+				});
+		} else {
+		    window.BaseType = BaseType;
+		}
 
-});
+}();
 
 

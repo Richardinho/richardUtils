@@ -1,60 +1,55 @@
-define(['src/BaseType'], function(BaseType) {
 
-    describe('BaseType test', function() {
-        var foo,
-            FooType,
-            spyOnInit,
-            options = {
-                jimJones : "jim"
-            };
+describe('BaseType test', function() {
+	var foo,
+    FooType,
+		spyOnInit,
+		options = {
+				jimJones : "jim"
+		};
 
-        beforeEach(function () {
+		beforeEach(function () {
 
-            FooType = BaseType.extend({
+				FooType = BaseType.extend({
 
-                initialize : function () {
+						initialize : function () {
 
-                },
-                doBlah : function () {
-                    return "richard";
-                }
-            });
+						},
+						doBlah : function () {
+								return "richard";
+						}
+				});
 
-            spyOnInit = spyOn(FooType.prototype, "initialize")
+				spyOnInit = spyOn(FooType.prototype, "initialize")
 
-            foo = new FooType(options);
+				foo = new FooType(options);
 
-        });
+		});
 
-        it('should copy properties from template into prototype', function() {
+		it('should copy properties from template into prototype', function() {
+				expect(foo.doBlah()).toEqual('richard');
+		});
 
-            expect(foo.doBlah()).toEqual('richard');
-        });
+		it("should call 'initialize()' with options", function() {
+				expect(spyOnInit).toHaveBeenCalledWith(options);
+		});
 
-        it("should call 'initialize()' with options", function() {
+		describe("inheritance", function () {
 
-            expect(spyOnInit).toHaveBeenCalledWith(options);
+				var BarType,
+						bar;
 
-        });
+				beforeEach(function () {
+						BarType = FooType.extend({
+								doSomething : function () {
+										return this.doBlah();
+								}
+						});
+						bar = new BarType();
 
-        describe("inheritance", function () {
+				});
+				it("should inherit parent methods", function () {
 
-            var BarType,
-                bar;
-
-            beforeEach(function () {
-                BarType = FooType.extend({
-                    doSomething : function () {
-                        return this.doBlah();
-                    }
-                });
-                bar = new BarType();
-
-            });
-            it("should inherit parent methods", function () {
-
-                expect(bar.doSomething()).toEqual('richard');
-            });
-        })
-    });
+						expect(bar.doSomething()).toEqual('richard');
+				});
+		})
 });
