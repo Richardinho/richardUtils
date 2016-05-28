@@ -56,7 +56,8 @@
 					// how to create synthetic event as if it occurred on this target?
 					handler({
 						target : target,
-						currentTarget, el
+						currentTarget: el,
+						preventDefault : event.preventDefault.bind(event)
 					});
 				}
 			});
