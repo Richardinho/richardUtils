@@ -62,7 +62,7 @@
 				if(target) {
 					// how to create synthetic event as if it occurred on this target?
 					handler({
-						target : event.target, // actual element the user clicked
+						target : target, // actual element the user clicked
 						currentTarget: target, // event current target refers to that specified by the targetSelector
 						preventDefault : event.preventDefault.bind(event), // delegates to original event object
 						stopPropagation : event.stopPropagation.bind(event),
