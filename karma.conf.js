@@ -10,10 +10,12 @@ basePath = '';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
+  'src/sundry.js',
   'src/BaseType.js',
   'src/dom.js',
   'test/baseTypeSpec.js',
-  'test/domSpec.js'
+  'test/domSpec.js',
+  'test/sundry.spec.js'
 ];
 
 

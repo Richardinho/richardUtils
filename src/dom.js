@@ -6,7 +6,8 @@
 		return typeof val === 'string';
 	}
 
-	function isFunction() {
+	function isFunction(val) {
+		return typeof val === "function"
   }
 
 	function matches(elm, selector) {
@@ -33,8 +34,12 @@
 				conditionFunc = function (el) {
 					return matches(el, condition);
 				}
-			} else {
+			} else if(isFunction(condition)) {
 				conditionFunc = condition;
+			} else {
+				throw {
+					message : 'condition must be a string or a function'
+				}
 			}
 
 			if(conditionFunc(descendant)) {
@@ -62,8 +67,8 @@
 				if(target) {
 					// how to create synthetic event as if it occurred on this target?
 					handler({
-						target : target, // actual element the user clicked
-						currentTarget: target, // event current target refers to that specified by the targetSelector
+						target : target,
+						currentTarget: el,
 						preventDefault : event.preventDefault.bind(event), // delegates to original event object
 						stopPropagation : event.stopPropagation.bind(event),
 						which : event.which,
@@ -74,8 +79,9 @@
 		}
 	};
 
-	if (typeof define != "undefined") {
-		define(function () {
+	//  https://github.com/requirejs/requirejs/wiki/Updating-existing-libraries#anon
+	if ( typeof define === "function" && define.amd ) {
+		define(function() {
 			return dom;
 		});
 	} else {
