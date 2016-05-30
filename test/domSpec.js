@@ -1,6 +1,59 @@
 describe('dom', function () {
+	var root;
+	beforeEach(function () {
+		root = document.createElement('div');
+		document.body.appendChild(root);
+	});
+
+	afterEach(function () {
+		document.body.removeChild(root);
+	});
+
+	describe('insertAfter()', function () {
+		var referenceEl, bar;
+		beforeEach(function () {
+			html = ['<div>',
+								'<div>',
+
+								'</div>',
+								'<div id="reference">',
+
+								'</div>',
+								'<div>',
+
+								'</div>',
+							'</div>'].join('');
+			root.innerHTML = html;
+			referenceEl = document.getElementById('reference');
+			bar = document.createElement('div');
+			bar.id = 'bar';
+		});
+		it('should insert element after reference element', function () {
+			domutils.insertAfter(bar, referenceEl);
+			expect(referenceEl.nextElementSibling).toBe(document.getElementById('bar'));
+		});
+	});
+	describe('insertAfter() when reference node is last child of parent', function () {
+		var referenceEl, bar;
+		beforeEach(function () {
+			html = ['<div>',
+								'<div>',
+								'</div>',
+								'<div id="reference">',
+								'</div>',
+							'</div>'].join('');
+			root.innerHTML = html;
+			referenceEl = document.getElementById('reference');
+			bar = document.createElement('div');
+			bar.id = 'bar';
+		});
+		it('should insert element after reference element', function () {
+			domutils.insertAfter(bar, referenceEl);
+			expect(referenceEl.nextElementSibling).toBe(document.getElementById('bar'));
+		});
+	});
 	describe('delegate()', function () {
-		var html, root, event, spyHandler;
+		var html, event, spyHandler;
 		beforeEach(function () {
 			html = ['<div id="ancestor">',
 			          '<div id="target" class="target">',
@@ -9,8 +62,6 @@ describe('dom', function () {
 			            '</div>',
 			          '</div>',
 			        '</div>'].join('');
-			root = document.createElement('div');
-			document.body.appendChild(root);
 			root.innerHTML = html;
 
 			descendant = document.getElementById('descendant');
@@ -25,16 +76,14 @@ describe('dom', function () {
 			descendant.dispatchEvent(event);
 
 		});
-		afterEach(function () {
-			document.body.removeChild(root);
-		});
+
 		it('should..', function () {
 			expect(spyHandler).toHaveBeenCalled();
 		});
 	});
 
 	describe('searchAncestors()', function () {
-		var html, root, descendant, ancestor, target, result;
+		var html, descendant, ancestor, target, result;
 		beforeEach(function () {
 			html = ['<div id="apple">',
 			          '<div id="banana">',
@@ -43,12 +92,7 @@ describe('dom', function () {
 			            '</div>',
 			          '</div>',
 			        '</div>'].join('');
-			root = document.createElement('div');
-			document.body.appendChild(root);
 			root.innerHTML = html;
-		});
-		afterEach(function () {
-			document.body.removeChild(root);
 		});
 		describe('when ancestor, descendant, and target are distinct elements', function(){
 			beforeEach(function () {
@@ -98,20 +142,15 @@ describe('dom', function () {
 	});
 
 	describe('$()', function () {
-		var html, root;
+		var html;
 		beforeEach(function () {
 			html = ['<div id="bar">',
 			          '<div>',
 			            '<div class="foo">foo</div>',
 			          '</div>',
 			        '</div>'].join('');
-			root = document.createElement('div');
-			document.body.appendChild(root);
-			root.innerHTML = html;
-		});
 
-		afterEach(function () {
-			document.body.removeChild(root);
+			root.innerHTML = html;
 		});
 		describe('when only a selector is passed in', function () {
 			it('should find element specified by selector', function () {

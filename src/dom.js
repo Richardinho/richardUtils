@@ -25,6 +25,15 @@
 		//  wrapper for querySelectorAll()
 		$$ : function () {},
 
+
+		insertAfter : function (newEl, referenceEl) {
+
+			var parentEl = referenceEl.parentElement;
+			var nextSibling = referenceEl.nextElementSibling;
+			// if next sibling is null, insertBefore will insert newEl as the last child of the parent.
+			parentEl.insertBefore(newEl, nextSibling)
+		},
+
 		//  condition is either a selector string or a function as per strategy pattern
 		searchAncestors : function (descendant, condition, ancestor){
 			var parent = descendant.parentNode,
@@ -84,7 +93,9 @@
 		define(function() {
 			return dom;
 		});
-	} else {
+	} else if (typeof module === "object" && module && typeof module.exports === "object") {
+		module.exports = dom;
+	} else if(typeof window === "object") {
 		window.domutils = dom;
 	}
 
