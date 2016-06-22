@@ -54,7 +54,7 @@
 
 			if(sundry.isString(condition)) {
 				conditionFunc = function (el) {
-					return matches(el, condition);
+					return dom.matches(el, condition);
 				}
 			} else if(sundry.isFunction(condition)) {
 				conditionFunc = condition;
@@ -98,6 +98,10 @@
 					});
 				}
 			});
+		},
+
+		nthChild : function (el, index) {
+			return el.children[index];
 		}
 	};
 

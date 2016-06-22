@@ -142,6 +142,26 @@ describe('dom', function () {
 		});
 	});
 
+	describe('nthChild()', function () {
+		var parentEl, fooEl;
+		beforeEach(function () {
+			root.innerHTML = [
+				'<ul id="parent">',
+					'<li></li>',
+					'<li></li>',
+					'<li></li>',
+					'<li id="foo"></li>',
+					'<li></li>',
+				'</ul>'
+			].join('');
+			fooEl = document.getElementById('foo');
+			parentEl = document.getElementById('parent');
+		});
+		it('should return child by index', function () {
+			expect(domutils.nthChild(parentEl, 3)).toBe(fooEl);
+		});
+	});
+
 	describe('searchAncestors()', function () {
 		var html, descendant, ancestor, target, result;
 		beforeEach(function () {
