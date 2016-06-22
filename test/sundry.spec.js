@@ -1,9 +1,19 @@
 describe('sundry utils', function () {
 
-	var extend;
+	var extend, isString, isFunction;
 
 	beforeEach(function () {
 		extend = sundry.extend;
+		isString = sundry.isString;
+		isFunction = sundry.isFunction;
+	});
+
+	describe('isString()', function () {
+
+	});
+
+	describe('isFunction()', function () {
+
 	});
 
 	describe('extend()', function () {

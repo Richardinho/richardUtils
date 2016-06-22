@@ -9,6 +9,64 @@ describe('dom', function () {
 		document.body.removeChild(root);
 	});
 
+	describe('$()', function () {
+  		var html;
+  		beforeEach(function () {
+  			html = ['<div id="bar">',
+  			          '<div>',
+  			            '<div class="foo">foo</div>',
+  			          '</div>',
+  			        '</div>'].join('');
+
+  			root.innerHTML = html;
+  		});
+  		describe('when only a selector is passed in', function () {
+  			it('should find element specified by selector', function () {
+  				expect(domutils.$('#bar .foo').innerHTML).toBe('foo'); // what is best way to get inner text of a node?
+  			});
+  		})
+  		describe('when selector and context are passed in', function () {
+  			it('should find element specified by selector within context', function () {
+  				expect(domutils.$('.foo', document.getElementById('bar')).innerHTML).toBe('foo'); // what is best way to get inner text of a node?
+  			});
+  		})
+  	});
+
+	describe('$$()', function () {});
+
+	describe('prev()', function () {
+		describe('When just element passed as argument', function () {
+			describe('when element has previous element sibling', function () {
+				it('should return previous element sibling', function () {
+
+				});
+			});
+			describe('When element does not have previous element sibling', function () {
+				it('should return NULL', function () {
+
+				});
+			});
+		});
+		describe('When selector argument is passed as second argument', function () {
+			describe('When element has previous element sibling which matches the selector', function () {
+				it('should return previous element sibling', function () {
+
+				});
+			});
+			describe('When element has previous element sibling which does not match the selector', function () {
+				it('should return NULL', function () {
+
+				});
+			});
+		});
+	});
+
+	describe('next()', function () {});
+
+	describe('parent()', function () {});
+
+	describe('matches()', function () {});
+
 	describe('insertAfter()', function () {
 		var referenceEl, bar;
 		beforeEach(function () {
@@ -33,6 +91,7 @@ describe('dom', function () {
 			expect(referenceEl.nextElementSibling).toBe(document.getElementById('bar'));
 		});
 	});
+
 	describe('insertAfter() when reference node is last child of parent', function () {
 		var referenceEl, bar;
 		beforeEach(function () {
@@ -52,6 +111,7 @@ describe('dom', function () {
 			expect(referenceEl.nextElementSibling).toBe(document.getElementById('bar'));
 		});
 	});
+
 	describe('delegate()', function () {
 		var html, event, spyHandler;
 		beforeEach(function () {
@@ -141,26 +201,5 @@ describe('dom', function () {
 		});
 	});
 
-	describe('$()', function () {
-		var html;
-		beforeEach(function () {
-			html = ['<div id="bar">',
-			          '<div>',
-			            '<div class="foo">foo</div>',
-			          '</div>',
-			        '</div>'].join('');
 
-			root.innerHTML = html;
-		});
-		describe('when only a selector is passed in', function () {
-			it('should find element specified by selector', function () {
-				expect(domutils.$('#bar .foo').innerHTML).toBe('foo'); // what is best way to get inner text of a node?
-			});
-		})
-		describe('when selector and context are passed in', function () {
-			it('should find element specified by selector within context', function () {
-				expect(domutils.$('.foo', document.getElementById('bar')).innerHTML).toBe('foo'); // what is best way to get inner text of a node?
-			});
-		})
-	});
 });

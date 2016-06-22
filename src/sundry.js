@@ -2,12 +2,16 @@
 
 	var sundry = {
 
+		toArray : function (arrayLike){
+			return Array.prototype.slice.call(arrayLike);
+		},
+
 		isString : function (val) {
 			return typeof val === 'string';
 		},
 
 		isFunction : function (val) {
-			return typeof val === "function"
+			return typeof val === 'function';
 		},
 
 		extend : function (target) {

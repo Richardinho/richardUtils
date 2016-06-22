@@ -2,20 +2,6 @@
 
 	"use strict";
 	//  promote to string utils file
-	function isString(val) {
-		return typeof val === 'string';
-	}
-
-	function isFunction(val) {
-		return typeof val === "function"
-  }
-
-	function matches(elm, selector) {
-		var matches = (elm.document || elm.ownerDocument).querySelectorAll(selector),
-				i = matches.length;
-		while (--i >= 0 && matches.item(i) !== elm) {}
-		return i > -1;
-	}
 
 	var dom = {
 		//  wrapper for querySelector()
@@ -25,6 +11,33 @@
 		//  wrapper for querySelectorAll()
 		$$ : function () {},
 
+		/*
+			Get the immediately preceding sibling of each
+			element in the set of matched elements.
+			If a selector is provided, it retrieves the previous
+			 sibling only if it matches that selector.
+		*/
+		prev : function (el, selector) {
+			var prevSibling = el.previousElementSibling;
+			return prevSibling && dom.matches(prevSibling, selector) ? prevSibling : null;
+		},
+
+		next : function (el, selector) {
+			var nextSibling = el.nextElementSibling;
+			return nextSibling && dom.matches(nextSibling, selector) ? nextSibling : null;
+		},
+
+		parent : function (el, selector) {
+			var parent = el.parentNode;
+			return parent && dom.matches(parent, selector) ? parent : null;
+		},
+
+		matches : function (elm, selector) {
+			var matches = (elm.document || elm.ownerDocument).querySelectorAll(selector),
+					i = matches.length;
+			while (--i >= 0 && matches.item(i) !== elm) {}
+			return i > -1;
+		},
 
 		insertAfter : function (newEl, referenceEl) {
 
@@ -39,11 +52,11 @@
 			var parent = descendant.parentNode,
 			    conditionFunc;
 
-			if(isString(condition)) {
+			if(sundry.isString(condition)) {
 				conditionFunc = function (el) {
 					return matches(el, condition);
 				}
-			} else if(isFunction(condition)) {
+			} else if(sundry.isFunction(condition)) {
 				conditionFunc = condition;
 			} else {
 				throw {
