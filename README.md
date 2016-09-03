@@ -135,4 +135,10 @@ for implementing the Proxy function.
 
 tests for the proxied object are in test.html. This has to be run from a server in order to work, and, of course, viewed using the Firefox Browser.
 
+#### NPM
+To get info on package
+```
+npm info richardUtils
+```
+
 

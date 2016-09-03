@@ -1,6 +1,6 @@
 {
   "name": "richardUtils",
-  "version": "0.0.0",
+  "version": "0.6.0",
   "description": "utility javascript code",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
     "base type",
     "event emitters"
   ],
-  "main": "main.js",
+  "main": "./src/index.js",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.6.0",
