@@ -11,7 +11,10 @@
 	"globals" : {
 		"console" : true,
 		"define" : true,
-		"module" : true
+		"module" : true,
+		"require" : true,
+		"define" : true,
+		"sundry" : true
 	},
 	"latedef" : "nofunc",
 	"noarg" : true,

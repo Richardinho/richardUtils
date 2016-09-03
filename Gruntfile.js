@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            docs: ["docs"]
+            docs: ["./docs/"]
         },
 
         jshint: {
