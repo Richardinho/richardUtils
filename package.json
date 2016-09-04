@@ -1,6 +1,6 @@
 {
   "name": "richardUtils",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "utility javascript code",
   "repository": {
     "type": "git",
@@ -23,7 +23,5 @@
   "author": "Richard Hunter",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
