@@ -7,8 +7,7 @@
 	} else if (typeof module === 'object' && module.exports) {
 		module.exports = factory();
 	} else {
-		// Browser globals (root is window)
-		root.domutils = factory();
+		root.sundry = factory();
 	}
 }(this, function () {
 
