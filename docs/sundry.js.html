@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: BaseType.js</title>
+    <title>JSDoc: Source: sundry.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: BaseType.js</h1>
+    <h1 class="page-title">Source: sundry.js</h1>
 
     
 
@@ -26,64 +26,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>(function (root, factory) {
+            <pre class="prettyprint source linenums"><code>
+(function (root, factory) {
+	'use strict';
+
 	if (typeof define === 'function' &amp;&amp; define.amd) {
-		define(function () {
-			return factory();
-		});
+		define(factory);
 	} else if (typeof module === 'object' &amp;&amp; module.exports) {
 		module.exports = factory();
 	} else {
-		root.BaseType = factory();
+		root.sundry = factory();
 	}
 }(this, function () {
 
-	'use strict';
+	"use strict";
 
-	return  {
+	var sundry = {
 
 		/**
-		 * extends method for inheritance
-		 * @param {Object} template - properties to be added to prototype of new type
-		 * @param {Object} staticMembers - static members of new type
-		 * @returns {Function} Constructor function of new type
-		 */
-		extend : function (template, staticMembers) {
+		*  Converts array like object (e.g. a NodeList) to an actual array
+		*
+		*  @function toArray
+		*  @param arrayLike {NodeList} array like object
+		*  @returns {Array} an actual array
+		*/
+		toArray : function (arrayLike){
+			return Array.prototype.slice.call(arrayLike);
+		},
 
-			var F = function(options) {
+		isString : function (val) {
+			return typeof val === 'string';
+		},
 
-				if(this.initialize &amp;&amp; typeof this.initialize === "function") {
-					this.initialize(options);
-				}
-			};
+		isFunction : function (val) {
+			return typeof val === 'function';
+		},
 
-			var Proxy = function () {};
+		extend : function (target) {
 
-			Proxy.prototype = this.prototype;
-
-			F.prototype = new Proxy();
-
-			for (var prop in template) {
-				if(template.hasOwnProperty(prop)) {
-					F.prototype[prop] = template[prop];
-				}
-			}
-
-			F.extend = this.extend;
-
-			for (var staticMember in staticMembers) {
-
-				if(staticMembers.hasOwnProperty(staticMember)) {
-					F[staticMember] = staticMembers[staticMember];
-				}
-			}
-
-			F.prototype.constructor = F;
-
-			return F;
+			var srcObjects = Array.prototype.slice.call(arguments, 1);
+			srcObjects.forEach(function (src) {
+				Object.keys(src).forEach(function(key){
+					target[key] = src[key];
+				});
+			});
+			return target;
 		}
 	};
+
+	return sundry;
+
 }));
+
+
+
 
 
 </code></pre>

@@ -1,5 +1,9 @@
 # Javascript utility code
 
+## Base Type
+
+provides extend() method which can be used for sub classing types.
+
 ## Dom Utils 
 
 ## Promises Promises

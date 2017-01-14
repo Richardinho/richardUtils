@@ -26,24 +26,23 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>(function () {
-
-	"use strict";
-	//  promote to string utils file
-
-	// if the module has no dependencies, the above pattern can be simplified to
+            <pre class="prettyprint source linenums"><code>
 	(function (root, factory) {
+		'use strict';
+
 		if (typeof define === 'function' &amp;&amp; define.amd) {
-			define([], factory);
+			define(['./sundry'], factory);
 		} else if (typeof module === 'object' &amp;&amp; module.exports) {
-			module.exports = factory();
+			module.exports = factory(require('./sundry.js'));
 		} else {
 			// Browser globals (root is window)
-			root.dom = factory();
+			root.domutils = factory(sundry);
 		}
-	}(this, function () {
+	}(this, function (sundry) {
 
-		return {
+		'use strict';
+
+		var domutils =  {
 
 			/**
 			*  alias for querySelector()
@@ -78,7 +77,7 @@
 			*/
 			prev : function (el, selector) {
 				var prevSibling = el.previousElementSibling;
-				return prevSibling &amp;&amp; dom.matches(prevSibling, selector) ? prevSibling : null;
+				return prevSibling &amp;&amp; domutils.matches(prevSibling, selector) ? prevSibling : null;
 			},
 
 
@@ -95,7 +94,7 @@
 			*/
 			next : function (el, selector) {
 				var nextSibling = el.nextElementSibling;
-				return nextSibling &amp;&amp; dom.matches(nextSibling, selector) ? nextSibling : null;
+				return nextSibling &amp;&amp; domutils.matches(nextSibling, selector) ? nextSibling : null;
 			},
 
 			/**
@@ -111,7 +110,7 @@
 			*/
 			parent : function (el, selector) {
 				var parent = el.parentNode;
-				return parent &amp;&amp; dom.matches(parent, selector) ? parent : null;
+				return parent &amp;&amp; domutils.matches(parent, selector) ? parent : null;
 			},
 
 			/**
@@ -127,29 +126,40 @@
 				return i > -1;
 			},
 
+			/**
+			*
+			* @function insertAfter
+			*
+			*
+			*/
 			insertAfter : function (newEl, referenceEl) {
 
 				var parentEl = referenceEl.parentElement;
 				var nextSibling = referenceEl.nextElementSibling;
 				// if next sibling is null, insertBefore will insert newEl as the last child of the parent.
-				parentEl.insertBefore(newEl, nextSibling)
+				parentEl.insertBefore(newEl, nextSibling);
 			},
 
-			//  condition is either a selector string or a function as per strategy pattern
+			/**
+			*  condition is either a selector string or a function as per strategy pattern
+			*
+			*  @function searchAncestors
+			*
+			*/
 			searchAncestors : function (descendant, condition, ancestor){
 				var parent = descendant.parentNode,
 				    conditionFunc;
 
 				if(sundry.isString(condition)) {
 					conditionFunc = function (el) {
-						return dom.matches(el, condition);
-					}
+						return domutils.matches(el, condition);
+					};
 				} else if(sundry.isFunction(condition)) {
 					conditionFunc = condition;
 				} else {
 					throw {
 						message : 'condition must be a string or a function'
-					}
+					};
 				}
 
 				if(conditionFunc(descendant)) {
@@ -159,7 +169,7 @@
 				} else if(parent === ancestor) {
 					return conditionFunc(parent) ? parent : false;
 				} else {
-					return dom.searchAncestors(parent, condition, ancestor);
+					return domutils.searchAncestors(parent, condition, ancestor);
 				}
 			},
 
@@ -188,7 +198,7 @@
 						handler(event);
 						return;
 					}
-					var target = dom.searchAncestors(event.target, targetSelector, event.currentTarget);
+					var target = domutils.searchAncestors(event.target, targetSelector, event.currentTarget);
 					if(target) {
 						// how to create synthetic event as if it occurred on this target?
 						handler({
@@ -215,9 +225,10 @@
 			}
 		};
 
+		return domutils;
+
 	}));
 
-})();
 
 
 </code></pre>
@@ -230,13 +241,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BaseType.html">BaseType</a></li></ul><h3>Classes</h3><ul><li><a href="PromisesPromise.html">PromisesPromise</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$">$</a></li><li><a href="global.html#$$">$$</a></li><li><a href="global.html#delegate">delegate</a></li><li><a href="global.html#matches">matches</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#nthChild">nthChild</a></li><li><a href="global.html#parent">parent</a></li><li><a href="global.html#prev">prev</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="PromisesPromise.html">PromisesPromise</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$">$</a></li><li><a href="global.html#$$">$$</a></li><li><a href="global.html#delegate">delegate</a></li><li><a href="global.html#extend">extend</a></li><li><a href="global.html#insertAfter">insertAfter</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#nthChild">nthChild</a></li><li><a href="global.html#parent">parent</a></li><li><a href="global.html#prev">prev</a></li><li><a href="global.html#searchAncestors">searchAncestors</a></li><li><a href="global.html#toArray">toArray</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Sep 03 2016 21:30:10 GMT+0100 (BST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jan 14 2017 02:20:43 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
