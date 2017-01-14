@@ -1,13 +1,18 @@
-(function () {
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		define(function () {
+			return factory();
+		});
+	} else if (typeof module === 'object' && module.exports) {
+		module.exports = factory();
+	} else {
+		root.BaseType = factory();
+	}
+}(this, function () {
 
-	"use strict";
+	'use strict';
 
-	/**
-	 * This modules provides a means to implement inheritance
-	 * @author Richard Hunter <richard@richardhunter.co.uk>
-	 * @exports BaseType
-	 */
-	var BaseType =  {
+	return  {
 
 		/**
 		 * extends method for inheritance
@@ -19,10 +24,10 @@
 
 			var F = function(options) {
 
-								if(this.initialize && typeof this.initialize === "function") {
-										this.initialize(options);
-								}
-						};
+				if(this.initialize && typeof this.initialize === "function") {
+					this.initialize(options);
+				}
+			};
 
 			var Proxy = function () {};
 
@@ -41,7 +46,7 @@
 			for (var staticMember in staticMembers) {
 
 				if(staticMembers.hasOwnProperty(staticMember)) {
-					F[prop] = staticMembers[staticMember];
+					F[staticMember] = staticMembers[staticMember];
 				}
 			}
 
@@ -50,15 +55,6 @@
 			return F;
 		}
 	};
-
-	if (window.define) {
-		define(function () {
-			return BaseType;
-		});
-	} else {
-		window.BaseType = BaseType;
-	}
-
-})();
+}));
 
 
