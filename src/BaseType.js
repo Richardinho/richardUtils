@@ -1,4 +1,7 @@
 (function (root, factory) {
+
+	'use strict';
+
 	if (typeof define === 'function' && define.amd) {
 		define(function () {
 			return factory();

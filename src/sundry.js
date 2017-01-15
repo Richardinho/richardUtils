@@ -23,14 +23,23 @@
 		*  @returns {Array} an actual array
 		*/
 		toArray : function (arrayLike){
+
 			return Array.prototype.slice.call(arrayLike);
 		},
 
+		isObject : function (obj) {
+
+			var type = typeof obj;
+			return type === 'function' || type === 'object' && !!obj;
+		},
+
 		isString : function (val) {
+
 			return typeof val === 'string';
 		},
 
 		isFunction : function (val) {
+
 			return typeof val === 'function';
 		},
 

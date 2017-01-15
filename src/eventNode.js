@@ -1,4 +1,17 @@
-define(function () {
+(function (root, factory) {
+	'use strict';
+
+	if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else if (typeof module === 'object' && module.exports) {
+		module.exports = factory();
+	} else {
+		// Browser globals (root is window)
+		root.eventNode = factory();
+	}
+}(this, function () {
+
+   'use strict';
 
     // constructor function
     var Node = function (obj, name, parent, nodeType) {
@@ -11,12 +24,14 @@ define(function () {
         if (parent) {
             this.parent = parent;
         }
+
         if (typeof obj === 'object') {
 
             this.children = {};
             for (var prop in obj) {
-
-                this.children[prop] = new Node(obj[prop], prop, this);
+                if(obj.hasOwnProperty(prop)) {
+                    this.children[prop] = new Node(obj[prop], prop, this);
+                }
             }
         } else {
             this.value = obj;
@@ -30,7 +45,9 @@ define(function () {
             this.children = {};
 
             for (var prop in obj) {
-                this.children[prop] = new Node(obj[prop], prop, this);
+                if(obj.hasOwnProperty(prop)) {
+                    this.children[prop] = new Node(obj[prop], prop, this);
+                }
             }
         }
         this.fire("reset");
@@ -114,8 +131,9 @@ define(function () {
         }
         // fire broadcast on children
         for(var child in this.children) {
-
-            this.children[child].broadcast.apply(this.children[child], arguments);
+            if(this.children.hasOwnProperty(child)) {
+                this.children[child].broadcast.apply(this.children[child], arguments);
+            }
         }
     };
 
@@ -181,6 +199,8 @@ define(function () {
 
     return Node;
 
+}));
 
 
-});
+
+

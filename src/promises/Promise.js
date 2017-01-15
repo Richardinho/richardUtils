@@ -1,5 +1,19 @@
+(function (root, factory) {
 
-(function () {
+    'use strict';
+
+	if (typeof define === 'function' && define.amd) {
+		define(['../sundry'], function () {
+			return factory(sundry);
+		});
+	} else if (typeof module === 'object' && module.exports) {
+		module.exports = factory(require('../sundry'));
+	} else {
+
+		root.PromisesPromises = factory(window.sundry);
+	}
+}(this, function (utils) {
+
     "use strict";
     /**
      * Creates am A+ compliant Promise
@@ -9,6 +23,9 @@
      */
     function Promise(init) {
 
+        this.fulfilledQueue = [];
+        this.rejectedQueue = [];
+
         this.state = {
             pending: true,
             fulfilled: false,
@@ -16,7 +33,9 @@
             value: null,
             reason: null
         };
+
         var self = this;
+
         if (init) { //  give the then method the time to run.
             setTimeout(function() {
                 init(self.fulfil.bind(self), self.reject.bind(self));
@@ -24,28 +43,23 @@
         }
     }
 
-    Promise.isFunction = function (obj) {
-        return typeof obj == 'function' || false;
-    };
 
-    Promise.isPromise = function (obj) {
-        return obj instanceof this;
-    }
-
-    Promise.isObject = function (obj) {
-        var type = typeof obj;
-        return type === 'function' || type === 'object' && !!obj;
-    }
     /**
+     * fulfil promise
      * @param {object} value - value of promise
      */
     Promise.prototype.fulfil = function (value) {
         var self = this;
+
         if (self.state.pending) {
             self.state.pending = false;
             self.state.value = value;
             self.state.fulfilled = true;
-            self.onFulfilled();
+            //  go through queue of fulfilled functions
+            self.fulfilledQueue.forEach(function (onFulfilled) {
+                onFulfilled.call(self);
+            });
+
         }
     };
     /**
@@ -53,16 +67,37 @@
      * @param {string}  reason - reason for rejection
      */
     Promise.prototype.reject = function (reason) {
+
         var self = this;
+
         if (self.state.pending) {
             self.state.pending = false;
             self.state.reason = reason;
             self.state.rejected = true;
-            self.onRejection();
+
+            self.rejectedQueue.forEach(function (onRejection) {
+                onRejection.call(self);
+            });
         }
     };
 
+    /**
+     * returns true if argument is a promise
+     * @param {any}  candidate promise
+     * @returns {Boolean}
+     */
+    Promise.isPromise = function (obj) {
+
+        return obj instanceof Promise;
+    };
+
+    /**
+     * Carries out resolve procedure.
+     * @param {Promise}  promise - promise to be resolved
+     * @param {any}  x - object to resolve promise with
+     */
     Promise.resolve = function (promise, x) {
+
         if (x === promise) {
             promise.reject(new TypeError("promise and x refer to same object"));
             return;
@@ -94,14 +129,14 @@
             }
         }
 
-        if (Promise.isObject(x)) {
+        if (utils.isObject(x)) {
             var then = x.then;
             //  If calling then throws an exception e,
             try {
                 then.call(x, resolvePromise, rejectPromise);
             } catch(e) {
                 //  If resolvePromise or rejectPromise have been called, ignore it.
-                if(!resolveRejectCalled) {
+                if(!resolveRejectCalled ) {
                     //  Otherwise, reject promise with e as the reason.
                     promise.reject(e);
                 }
@@ -110,7 +145,7 @@
         } else {
             promise.fulfil(x);
         }
-    }
+    };
 
     /**
      * @public
@@ -119,23 +154,20 @@
      * @returns {Promise} returns a new promise
      */
     Promise.prototype.then = function (onFulfilled, onRejected) {
-        console.log('then()');
+
         //  Both onFulfilled and onRejected are optional arguments:
-        //  If onFulfilled is not a function, it must be ignored.
-        var onFulfilledIsFunction = Promise.isFunction(onFulfilled);
-        //  If onRejected is not a function, it must be ignored.
-        var onRejectedIsFunction = Promise.isFunction(onRejected);
 
         var promise2 = new Promise();
 
-        var x;
         //  If onFulfilled is a function:
         //  it must be called after promise is fulfilled, with promise's value as its first argument.
         //  it must not be called before promise is fulfilled.
         //it must not be called more than once.
-        this.onFulfilled = function () {
+        this.fulfilledQueue.push(function () {
 
-            if (onFulfilledIsFunction) {
+            var x;
+
+            if (utils.isFunction(onFulfilled)) {
                 //onFulfilled must be called as a function (i.e. with no this value)
                 //If onFulfilled throws an exception e, promise2 must be rejected with e as the reason.
                 try {
@@ -150,14 +182,17 @@
                 //If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value as promise1.
                 promise2.fulfil(this.state.value);
             }
-        }
+        });
 
-        this.onRejection = function () {
+        this.rejectedQueue.push(function () {
             //  If onRejected is a function,
             //  it must be called after promise is rejected, with promise's reason as its first argument.
             //  it must not be called before promise is rejected.
             //  it must not be called more than once.
-            if (onRejectedIsFunction) {
+
+            var x;
+
+            if (utils.isFunction(onRejected)) {
                 //  onRejected must be called as a function (i.e. with no this value)
                 //  If onRejected throws an exception e, promise2 must be rejected with e as the reason.
                 try {
@@ -172,24 +207,14 @@
                 // If onRejected is not a function and promise1 is rejected, promise2 must be rejected with the same reason as promise1.
                 promise2.reject(this.state.reason);
             }
-        }
+        });
 
         return promise2;
-    }
+    };
 
-    if (typeof module === "object" && module && typeof module.exports === "object") {
-        // Expose jQuery as module.exports in loaders that implement the Node
-        // module pattern (including browserify). Do not create the global, since
-        // the user will be storing it themselves locally, and globals are frowned
-        // upon in the Node module world.
-        module.exports = Promise;
-    } else {
-        //  create global variable
-        if(typeof window === "object") {
-            window.PromisesPromise = Promise;
-        }
-    }
+    return Promise;
 
-}());
+
+}));
 
 

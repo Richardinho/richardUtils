@@ -1,11 +1,46 @@
 describe('sundry utils', function () {
 
-	var extend, isString, isFunction;
+	'use strict';
+
+	var
+	   toArray
+	   ,isObject
+	   ,isString
+	   ,isFunction
+	   ,extend
+	   ;
 
 	beforeEach(function () {
-		extend = sundry.extend;
+		toArray = sundry.toArray;
+		isObject = sundry.isObject;
 		isString = sundry.isString;
 		isFunction = sundry.isFunction;
+		extend = sundry.extend;
+	});
+
+	describe('toArray()', function () {
+
+		var result,
+		    arrayLike;
+
+		beforeEach(function () {
+
+			function makeArrayLike() {
+				return arguments;
+			}
+			arrayLike = makeArrayLike('alpha', 'beta', 'gamma');
+			result = toArray(arrayLike);
+
+		});
+		it('should return array', function () {
+			expect(Array.isArray(result)).toBe(true);
+			expect(Array.isArray(arrayLike)).toBe(false);
+
+		});
+	});
+
+	describe('isObject()', function () {
+
 	});
 
 	describe('isString()', function () {

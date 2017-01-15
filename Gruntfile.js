@@ -15,11 +15,6 @@ module.exports = function(grunt) {
             options : {
                 jshintrc : '.jshintrc',
                 ignores : [
-                    'src/deferredTest/**/*.js',
-                    'src/promises/**/*.js',
-                    'src/Draggable.js',
-                    'src/enhancedObject.js',
-                    'src/eventNode.js'
                 ]
             },
             all: ['Gruntfile.js', 'src/**/*.js']
@@ -38,6 +33,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.registerTask("docs", ['clean:docs', 'jsdoc']);
+    grunt.registerTask("lint", ['jshint']);
 
 
 };
