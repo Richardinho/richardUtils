@@ -20,15 +20,6 @@ Interoperable with other Promises/A+ compatible libraries (e.g. q).
 A constructor function for creating Draggable objects which encapsulate div elements which can be dragged around the viewport using the mouse.
 Callbacks can be passed to the constructor for custom functionality.
 
-### usage
-dfdfdfd dfd
-
-#### custom behaviour using callbacks
-sdefdfdf
-
-#### use with proxy object
-dfdfdf
-
 
 ## proxy object with event handling capabilities
 
