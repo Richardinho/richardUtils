@@ -11,7 +11,7 @@
 		// Browser globals (root is window)
 		root.enhancedObject = factory(window.sundry);
 	}
-}(this, function (utils) {
+}(this, function () {
 
 	'use strict';
 
