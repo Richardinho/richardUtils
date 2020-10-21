@@ -1,39 +1,36 @@
 module.exports = function(grunt) {
 
-    "use strict";
+  "use strict";
 
-    grunt.initConfig({
+  grunt.initConfig({
 
-        pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package.json'),
 
-        clean: {
-            docs: ["./docs/"]
-        },
+    clean: {
+      docs: ["./docs/"]
+    },
 
-        jshint: {
+    jshint: {
 
-            options : {
-                jshintrc : '.jshintrc',
-                ignores : [
-                ]
-            },
-            all: ['Gruntfile.js', 'src/**/*.js']
-        },
+      options : {
+        jshintrc : '.jshintrc',
+        ignores : [
+        ]
+      },
+      all: ['Gruntfile.js', 'src/**/*.js']
+    },
 
-        jsdoc : {
-            src: ['src/**/*.js'],
-            options: {
-                destination: 'docs'
-            }
-        }
+    jsdoc : {
+      src: ['src/**/*.js'],
+      options: {
+        destination: 'docs'
+      }
+    }
+  });
 
-    });
-
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask("docs", ['clean:docs', 'jsdoc']);
-    grunt.registerTask("lint", ['jshint']);
-
-
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.registerTask('docs', ['clean:docs', 'jsdoc']);
+  grunt.registerTask('lint', ['jshint']);
 };

@@ -15,14 +15,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/sundry.js',
+      //'src/sundry.js',
      // 'src/BaseType.js',
-      'src/promises/Promise.js',
-      'src/enhanced-object.js',
+      'src/promises/promise.js',
+      //'src/promises/tests/resolve.spec.js',
+      //'src/promises/tests/promise.spec.js',
+      //'src/enhanced-object.js',
      // 'test/BaseTypeSpec.js',
-      'test/promises.spec.js',
-      'test/sundry.spec.js',
-      'test/enhanced-object.spec.js'
+      //'test/promises.spec.js',
+      ///'test/sundry.spec.js',
+      //'test/enhanced-object.spec.js'
     ],
 
 

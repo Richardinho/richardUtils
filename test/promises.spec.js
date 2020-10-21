@@ -39,6 +39,7 @@ describe('promises', function () {
 
             });
 
+
             describe('onFulfil()', function () {
                 it('should transition to fulfilled state with value', function () {
 
@@ -547,6 +548,7 @@ describe('promises', function () {
         describe('when then is NOT a function', function () {
 
             beforeEach(function () {
+                promise = new P();
 
                 x = 'blah';
             });
