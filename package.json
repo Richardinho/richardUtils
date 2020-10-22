@@ -25,9 +25,7 @@
     "promises-aplus-tests": "^2.1.2",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-jshint": "^3.0.0",
-    "grunt-jasmine": "^0.1.0",
     "grunt-jsdoc": "^2.4.1",
-    "grunt-karma": "^4.0.0",
     "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^4.0.1"
