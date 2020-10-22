@@ -1,5 +1,4 @@
-
-describe('BaseType test', function() {
+describe('BaseType', function() {
 	var foo,
 	    FooType,
 	    spyOnInit,
@@ -8,12 +7,9 @@ describe('BaseType test', function() {
 	    };
 
 	beforeEach(function () {
-
 		FooType = BaseType.extend({
+			initialize : function () {},
 
-			initialize : function () {
-
-			},
 			doBlah : function () {
 				return "richard";
 			}
@@ -22,7 +18,6 @@ describe('BaseType test', function() {
 		spyOnInit = spyOn(FooType.prototype, "initialize")
 
 		foo = new FooType(options);
-
 	});
 
 	it('should copy properties from template into prototype', function() {
@@ -34,9 +29,8 @@ describe('BaseType test', function() {
 	});
 
 	describe("inheritance", function () {
-
 		var BarType,
-			bar;
+		  	bar;
 
 		beforeEach(function () {
 			BarType = FooType.extend({
@@ -47,8 +41,8 @@ describe('BaseType test', function() {
 			bar = new BarType();
 
 		});
-		it("should inherit parent methods", function () {
 
+		it("should inherit parent methods", function () {
 			expect(bar.doSomething()).toEqual('richard');
 		});
 	});

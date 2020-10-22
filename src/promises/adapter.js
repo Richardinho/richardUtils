@@ -1,4 +1,4 @@
-const TestPromise = require('./promise');
+const TestPromise = require('./index.js');
 
 exports.resolved = (value) => {
   const promise = new TestPromise((resolve) => {

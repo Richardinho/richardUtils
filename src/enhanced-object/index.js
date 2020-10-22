@@ -4,9 +4,9 @@
 	'use strict';
 
 	if (typeof define === 'function' && define.amd) {
-		define(['./sundry'], factory);
+		define(['../sundry'], factory);
 	} else if (typeof module === 'object' && module.exports) {
-		module.exports = factory(require('./sundry'));
+		module.exports = factory(require('../sundry'));
 	} else {
 		// Browser globals (root is window)
 		root.enhancedObject = factory(window.sundry);

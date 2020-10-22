@@ -23,11 +23,12 @@
 		 * @param {Object} staticMembers - static members of new type
 		 * @returns {Function} Constructor function of new type
 		 */
+
 		extend : function (template, staticMembers) {
 
 			var F = function(options) {
 
-				if(this.initialize && typeof this.initialize === "function") {
+				if (this.initialize && typeof this.initialize === "function") {
 					this.initialize(options);
 				}
 			};
@@ -39,7 +40,7 @@
 			F.prototype = new Proxy();
 
 			for (var prop in template) {
-				if(template.hasOwnProperty(prop)) {
+				if (template.hasOwnProperty(prop)) {
 					F.prototype[prop] = template[prop];
 				}
 			}
@@ -48,7 +49,7 @@
 
 			for (var staticMember in staticMembers) {
 
-				if(staticMembers.hasOwnProperty(staticMember)) {
+				if (staticMembers.hasOwnProperty(staticMember)) {
 					F[staticMember] = staticMembers[staticMember];
 				}
 			}

@@ -1,5 +1,5 @@
-module.exports.domUtils = require('./dom.js');
-module.exports.sundry = require('./sundry.js');
-module.exports.enhancedObject = require('./enhanced-object.js');
-module.exports.promisesPromises = require('./promises/Promise.js');
-module.exports.BaseType = require('./BaseType.js');
+module.exports.domUtils = require('./dom-utils');
+module.exports.sundry = require('./sundry');
+module.exports.enhancedObject = require('./enhanced-object');
+module.exports.promisesPromises = require('./promises');
+module.exports.BaseType = require('./base-type');

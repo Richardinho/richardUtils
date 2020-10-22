@@ -1,11 +1,10 @@
-
 (function (root, factory) {
 	'use strict';
 
 	if (typeof define === 'function' && define.amd) {
-		define(['./sundry'], factory);
+		define(['./sundry/index'], factory);
 	} else if (typeof module === 'object' && module.exports) {
-		module.exports = factory(require('./sundry.js'));
+		module.exports = factory(require('./sundry'));
 	} else {
 		// Browser globals (root is window)
 		root.domutils = factory(sundry);
@@ -33,7 +32,9 @@
 		*  @function
 		*  @name $$
 		*/
-		$$ : function () {},
+		$$ : function (selector, context) {
+      return (context || document).querySelectorAll(selector);
+    },
 
 		/**
 		*
@@ -105,7 +106,6 @@
 		*
 		*/
 		insertAfter : function (newEl, referenceEl) {
-
 			var parentEl = referenceEl.parentElement;
 			var nextSibling = referenceEl.nextElementSibling;
 			// if next sibling is null, insertBefore will insert newEl as the last child of the parent.
@@ -161,16 +161,19 @@
 		*  @param context {Object} context to bind the handler to
 		*/
 		delegate : function (el, eventType, targetSelector, handler, context) {
-			if(context) {
+			if (context) {
 				handler = handler.bind(context);
 			}
+
 			el.addEventListener(eventType, function (event){
 				// are we on the element the handler is attached to?
-				if(event.target === event.currentTarget) {
+				if (event.target === event.currentTarget) {
 					handler(event);
 					return;
 				}
+
 				var target = domutils.searchAncestors(event.target, targetSelector, event.currentTarget);
+
 				if(target) {
 					// how to create synthetic event as if it occurred on this target?
 					handler({
@@ -186,19 +189,19 @@
 		},
 
 		/**
-		*  Selects a child element by index
-		*  @function nthChild
-		*  @param {Element} parent element
-		*  @param {Number} index of element to select within array of child elements
-		*  @returns {Element} child element found
-		*/
+     *  Selects a child element by index
+     *  @function nthChild
+     *  @param {Element} parent element
+     *  @param {Number} index of element to select within array of child elements
+     *  @returns {Element} child element found
+     */
+
 		nthChild : function (el, index) {
 			return el.children[index];
 		}
 	};
 
 	return domutils;
-
 }));
 
 

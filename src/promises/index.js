@@ -47,6 +47,7 @@
     this.queue = [];
 
     var that = this;
+
     if (fn) {
         fn(function (value) {
             Promise.resolve(that, value);

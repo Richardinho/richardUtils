@@ -6,28 +6,13 @@ provides extend() method which can be used for sub classing types.
 
 ## Dom Utils 
 
-## Promises Promises
+## MyPromise 
 
 An implementation of the Promises/A+ specification. [Promises/A+ specification][].
 Works both as a Node module and in the browser.
 Interoperable with other Promises/A+ compatible libraries (e.g. q).
 
 [Promises/A+ specification]: https://github.com/promises-aplus/promises-spec
-
-## Draggable
-
-### intro
-A constructor function for creating Draggable objects which encapsulate div elements which can be dragged around the viewport using the mouse.
-Callbacks can be passed to the constructor for custom functionality.
-
-### usage
-dfdfdfd dfd
-
-#### custom behaviour using callbacks
-sdefdfdf
-
-#### use with proxy object
-dfdfdf
 
 
 ## proxy object with event handling capabilities
