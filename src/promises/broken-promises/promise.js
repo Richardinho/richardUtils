@@ -11,14 +11,15 @@
 		root.MyPromise = factory();
 	}
 }(this, function () {
+  'use strict';
 
   /*
    *  constants
    */
 
-  const PENDING = 'pending';
-  const FULFILLED = 'fulfilled';
-  const REJECTED = 'rejected';
+  var PENDING = 'pending';
+  var FULFILLED = 'fulfilled';
+  var REJECTED = 'rejected';
 
   /*
    * Utility functions
@@ -45,17 +46,27 @@
     this.value = null;
     this.reason = null;
     this.queue = [];
+
+    var that = this;
+
+    if (fn) {
+        fn(function (value) {
+            Promise.resolve(that, value);
+        }, function (reason) {
+            that.reject(reason);
+        });
+    }
   }
 
   Promise.prototype.fulfill = function (value) {
     this.transition(FULFILLED, value);
     this.processQueueWhenFulfilled();
-  }
+  };
 
   Promise.prototype.reject = function (reason) {
     this.transition(REJECTED, reason);
     this.processQueueWhenRejected();
-  }
+  };
 
   Promise.prototype.transition = function(newState, arg) {
     if (this.state === PENDING) {
@@ -69,54 +80,62 @@
 
       this.state = newState;
     }
-  }
+  };
 
   Promise.prototype.processQueueWhenFulfilled = function () {
-    setTimeout(() => {
-      while(this.queue.length) {
-        const {onFulfilled, promise} = this.queue.shift();
+    var self = this;
+
+    setTimeout(function() {
+      while(self.queue.length) {
+        var handlers = self.queue.shift();
+        var onFulfilled = handlers.onFulfilled;
+        var promise = handlers.promise;
 
         if (isFunction(onFulfilled)) {
           try {
-            let x = onFulfilled(this.value);
+            var x = onFulfilled(self.value);
             Promise.resolve(promise, x);
           } catch(e) {
             promise.reject(e);
           }
         } else {
-          promise.fulfill(this.value);
+          promise.fulfill(self.value);
         }
       }
     }, 0);
-  }
+  };
 
   Promise.prototype.processQueueWhenRejected = function () {
-    setTimeout(() => {
-      while(this.queue.length) {
-        const {onRejected, promise} = this.queue.shift();
+    var self = this;
+
+    setTimeout(function() {
+      while(self.queue.length) {
+        var handlers = self.queue.shift();
+        var onRejected = handlers.onRejected;
+        var promise = handlers.promise;
 
         if (isFunction(onRejected)) {
           try {
-            let x = onRejected(this.reason);
+            var x = onRejected(self.reason);
             Promise.resolve(promise, x);
           } catch(e) {
             promise.reject(e);
           }
         } else {
-          promise.reject(this.reason);
+          promise.reject(self.reason);
         }
       }
     }, 0);
-  }
+  };
 
   // the onFulfilled function determines how the promise returned from then is resolved
   Promise.prototype.then = function(onFulfilled, onRejected) {
-    const promise = new Promise();
+    var promise = new Promise();
 
     this.queue.push({
-      onFulfilled,
-      onRejected,
-      promise,
+      onFulfilled: onFulfilled,
+      onRejected: onRejected,
+      promise: promise,
     });
 
     if (this.state === FULFILLED) {
@@ -128,7 +147,7 @@
     }
 
     return promise;
-  }
+  };
 
   Promise.resolve = function(promise, x) {
     if (x === promise) {
@@ -136,12 +155,11 @@
     } else if (isPromise(x)) {
       if (x.state === PENDING) {
         x.then(
-
-          (val) => {
+          function (val){
             promise.fulfill(val);
           },
 
-          (reason) => {
+          function(reason){
             promise.reject(reason);
           });
       } else if(x.state === REJECTED) {
@@ -150,24 +168,24 @@
         promise.fulfill(x.value);
       }
     } else if (isObject(x) || isFunction(x)) {
-      let allowCall = true;
+      var allowCall = true;
 
-      function resolvePromise(y) {
+      var resolvePromise = function resolvePromise(y) {
         if (allowCall) {
           allowCall = false;
           Promise.resolve(promise, y);
         }
-      }
+      };
 
-      function rejectPromise(r) {
+      var rejectPromise = function rejectPromise(r) {
         if (allowCall) {
           allowCall = false;
           promise.reject(r);
         }
-      }
+      };
 
       try {
-        let then = x.then;
+        var then = x.then;
 
         if (isFunction(then)) {
           try {
@@ -186,7 +204,7 @@
     } else {
       promise.fulfill(x);
     }
-  } 
+  }; 
 
   return Promise;
 }));

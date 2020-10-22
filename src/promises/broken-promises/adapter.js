@@ -1,20 +1,23 @@
-const TestPromise = require('./promise');
+var TestPromise = require('./promise');
 
-exports.resolved = (value) => {
-  const promise = new TestPromise();
+exports.resolved = function (value) {
+  'use strict';
+  var promise = new TestPromise();
   promise.fulfill(value);
   return promise;
-}
+};
 
-exports.rejected = (reason) => {
-  const promise = new TestPromise();
+exports.rejected = function(reason) {
+  'use strict';
+  var promise = new TestPromise();
   promise.reject(reason);
   return promise;
-}
+};
 
-exports.deferred = () => {
+exports.deferred = function() {
+  'use strict';
 
-  const promise = new TestPromise();
+  var promise = new TestPromise();
 
   function resolve(value) {
     promise.fulfill(value);
@@ -25,9 +28,9 @@ exports.deferred = () => {
   }
 
   return {
-    promise,
-    resolve,
-    reject,
+    promise: promise,
+    resolve: resolve,
+    reject: reject,
   };
 };
 

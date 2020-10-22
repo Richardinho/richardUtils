@@ -2,13 +2,7 @@ describe('sundry utils', function () {
 
   'use strict';
 
-  var
-  toArray
-    ,isObject
-    ,isString
-    ,isFunction
-    ,extend
-  ;
+  var toArray, isObject, isString, isFunction, extend;
 
   beforeEach(function () {
     toArray = sundry.toArray;

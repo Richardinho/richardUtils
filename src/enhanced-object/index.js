@@ -1,5 +1,3 @@
-/* globals Proxy */
-
 (function (root, factory) {
   'use strict';
 
@@ -19,7 +17,6 @@
     throw new Error("Proxy function not implemented in this environment");
   }
 
-  // utility functions
   function isObject(value) {
     return Object.prototype.toString.call(value) === "[object Object]";
   }
@@ -29,7 +26,6 @@
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
   }
 
-  //  mixin utility function
   function extend(destination, source) {
     for (var k in source) {
       if (source.hasOwnProperty(k)) {
@@ -56,12 +52,6 @@
       });
     },
 
-    /**
-     *
-     *
-     *
-     *
-     */
     on : function (eventName, action, context) {
 
       if(!this.listeners) {
@@ -96,7 +86,6 @@
         }
       }
     },
-
 
     off : function () {
       // todo: to implement
@@ -142,7 +131,6 @@
       return true;
     }
   };
-
 
   function proxyUpObj(obj) {
 

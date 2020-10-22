@@ -14,7 +14,12 @@
 		"module" : true,
 		"require" : true,
 		"define" : true,
-		"sundry" : true
+		"sundry" : true,
+    "exports": true,
+    "enhancedObject": true,
+    "domutils": true,
+    "BaseType": true,
+    "Proxy": true
 	},
 	"latedef" : "nofunc",
 	"noarg" : true,

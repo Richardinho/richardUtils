@@ -1,4 +1,6 @@
 describe('dom-utils', function () {
+  "use strict";
+
   var root;
 
   beforeEach(function () {
@@ -37,20 +39,18 @@ describe('dom-utils', function () {
   });
 
   describe('$$()', function () {
-    var html;
     var el;
 
     beforeEach(function () {
       el = document.createElement('div');
 
-      el.innerHTML = `
-        <div id="bar">
-          <div class="foo">foo</div>
-          <div id="context">
-            <div class="foo">another foo</div>
-          </div>
-        </div>
-      `;
+      el.innerHTML = 
+        ['<div id="bar">',
+          '<div class="foo">foo</div>',
+          '<div id="context">',
+            '<div class="foo">another foo</div>',
+          '</div>',
+        '</div>'].join('');
 
       root.appendChild(el);
     });
@@ -59,15 +59,15 @@ describe('dom-utils', function () {
       el.remove();
     });
 
-    describe('when only selector is passed in', () => {
-      it('should return node list of elements identified by selector in document', () => {
+    describe('when only selector is passed in', function() {
+      it('should return node list of elements identified by selector in document', function() {
         var nodeList = domutils.$$('.foo');
         expect(nodeList.length).toBe(2);
       });
     });
 
-    describe('when selector and context are passed in', () => {
-      it('should return node list of elements identified by selector within context el', () => {
+    describe('when selector and context are passed in', function() {
+      it('should return node list of elements identified by selector within context el', function() {
         var contextEl = document.getElementById('context');
         var nodeList = domutils.$$('.foo', contextEl);
         expect(nodeList.length).toBe(1);
@@ -109,7 +109,8 @@ describe('dom-utils', function () {
   describe('matches()', function () {});
 
   describe('insertAfter()', function () {
-    var referenceEl, bar;
+    var html, referenceEl, bar;
+
     beforeEach(function () {
       html = ['<div>',
         '<div>',
@@ -135,7 +136,7 @@ describe('dom-utils', function () {
   });
 
   describe('insertAfter() when reference node is last child of parent', function () {
-    var referenceEl, bar;
+    var html, referenceEl, bar;
     beforeEach(function () {
       html = ['<div>',
         '<div>',
@@ -156,7 +157,7 @@ describe('dom-utils', function () {
   });
 
   describe('delegate()', function () {
-    var html, event, spyHandler;
+    var target, ancestor, html, event, spyHandler, descendant;
 
     beforeEach(function () {
       html = ['<div id="ancestor">',

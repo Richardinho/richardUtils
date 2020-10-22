@@ -1,32 +1,39 @@
-const TestPromise = require('./index.js');
+var TestPromise = require('./index.js');
 
-exports.resolved = (value) => {
-  const promise = new TestPromise((resolve) => {
+exports.resolved = function(value) {
+  'use strict';
+
+  var promise = new TestPromise(function(resolve) {
     resolve(value);
   });
-  return promise;
-}
 
-exports.rejected = (reason) => {
-  const promise = new TestPromise((_, reject) => {
+  return promise;
+};
+
+exports.rejected = function(reason) {
+  'use strict';
+
+  var promise = new TestPromise(function(_, reject) {
     reject(reason);
   });
 
   return promise;
-}
+};
 
-exports.deferred = () => {
+exports.deferred = function() {
+  'use strict';
+
   var resolve, reject;
 
-  const promise = new TestPromise((_resolve, _reject) => {
+  var promise = new TestPromise(function(_resolve, _reject) {
     resolve = _resolve;
     reject = _reject;
   });
 
   return {
-    promise,
-    resolve,
-    reject,
+    promise: promise,
+    resolve: resolve,
+    reject: reject,
   };
 };
 

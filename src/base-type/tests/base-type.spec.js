@@ -1,4 +1,7 @@
+
 describe('BaseType', function() {
+  "use strict";
+
 	var foo,
 	    FooType,
 	    spyOnInit,
@@ -15,7 +18,7 @@ describe('BaseType', function() {
 			}
 		});
 
-		spyOnInit = spyOn(FooType.prototype, "initialize")
+		spyOnInit = spyOn(FooType.prototype, "initialize");
 
 		foo = new FooType(options);
 	});
@@ -49,6 +52,7 @@ describe('BaseType', function() {
 
 	describe('static properties', function () {
 		var Moo;
+
 		beforeEach(function () {
 
 			Moo = BaseType.extend({
@@ -56,8 +60,6 @@ describe('BaseType', function() {
 			}, {
 				apple : 'green'
 			});
-
-			new Moo();
 		});
 
 		it('should attach static members', function () {
