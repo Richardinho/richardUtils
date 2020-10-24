@@ -2,17 +2,15 @@ describe('Given an object with nested objects has been event enhanced', function
   'use strict';
 
   var foo,
-    proxy;
+      proxy;
 
   beforeEach(function () {
-
     //  example obj.
     foo = {
       name : "foo",
       bar : "bar",
       moo : "moo",
       cars : {
-
         jeep : "jeep",
         austin : "austin",
         bikes : {

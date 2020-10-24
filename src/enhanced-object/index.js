@@ -6,7 +6,6 @@
   } else if (typeof module === 'object' && module.exports) {
     module.exports = factory(require('../sundry'));
   } else {
-    // Browser globals (root is window)
     root.enhancedObject = factory(window.sundry);
   }
 }(this, function () {
@@ -32,28 +31,24 @@
         destination[k] = source[k];
       }
     }
+
     return destination;
   }
 
   var events = {
-
     trigger : function (eventName) {
-
-      if(!this.listeners || !this.listeners[eventName]) {
+      if (!this.listeners || !this.listeners[eventName]) {
         return;
       }
 
       var args = Array.prototype.slice.call(arguments, 1);
 
       this.listeners[eventName].forEach(function (listener) {
-
         listener.action.apply(listener.context, args);
-
       });
     },
 
     on : function (eventName, action, context) {
-
       if(!this.listeners) {
         this.listeners = {};
       }
@@ -67,21 +62,17 @@
         context : context
       });
     },
+
     // could pass through the event target, the object the event occurred on
     broadcast : function () {
-
       this.trigger.apply(this, arguments);
 
-      for(var key in this) {
-
-        if(key !== 'listeners' && key !== 'parent') {
-
+      for (var key in this) {
+        if (key !== 'listeners' && key !== 'parent') {
           var value = this[key];
 
-          if(isObject(value)) {
-
+          if (isObject(value)) {
             value.broadcast.apply(value, arguments);
-
           }
         }
       }
@@ -93,65 +84,54 @@
 
     // could pass through the event target, the object the event occurred on
     fire : function () {
-
       this.trigger.apply(this, arguments);
 
       if (this.parent) {
         this.parent.fire.apply(this.parent, arguments);
       }
-
     }
   };
 
   var handler = {
-
     // intercepts property assignment on an object
-    set : function (target, name, value) {
-
-      if(name === 'parent' || name === 'listeners' || isFunction(value)) {
+    set: function (target, name, value) {
+      if (name === 'parent' || name === 'listeners' || isFunction(value)) {
         target[name] = value;
         return true;
       }
 
-      if(isObject(value)) {
-
+      if (isObject(value)) {
         value.parent = target;
 
         // proxyupObj will iterate through all the props of the value obj. Since set is called whenever a property is set
         // if any of the child properties are objects, proxyupObj will be called recursively.
+
         target[name] = proxyUpObj(value);
-
-      }
-      //  primitive types are just assigned normally. We fire a change event.
-      else {
-
+      } else {
+        //  primitive types are just assigned normally. We fire a change event.
         target[name] = value;
-        target.fire("change", value);
+        target.fire("change:" + name, value, name);
+        target.fire("change", value, name);
       }
+
       return true;
     }
   };
 
   function proxyUpObj(obj) {
-
     var proxy = new Proxy({}, handler);
 
-    // mixin events
     extend(proxy, events);
 
     for(var prop in obj) {
-
-      if(obj.hasOwnProperty(prop)) {
-
+      if (obj.hasOwnProperty(prop)) {
         proxy[prop] = obj[prop];
-
       }
     }
+
     return proxy;
   }
 
-
   return proxyUpObj;
-
 }));
 
