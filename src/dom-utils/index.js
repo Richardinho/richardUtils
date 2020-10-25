@@ -2,9 +2,9 @@
 	'use strict';
 
 	if (typeof define === 'function' && define.amd) {
-		define(['./sundry/index'], factory);
+		define(['../sundry/index'], factory);
 	} else if (typeof module === 'object' && module.exports) {
-		module.exports = factory(require('./sundry'));
+		module.exports = factory(require('../sundry'));
 	} else {
 		// Browser globals (root is window)
 		root.domutils = factory(sundry);

@@ -1,3 +1,7 @@
+# MyPromise
+An implementation of promises following the APlus specification.
+
+This follows the specification fairly literally so it may be useful for those trying to understand how promises work internally. My main purpose in building it was to achieve this for myself.
 ## What is a promise?
 
 ## How do they work?
@@ -44,6 +48,9 @@ When the promise if fulfilled, all the handlers in the fulfilledQueue are called
 
 </p>
 
+ A promise is a representation of a variable that may or may not have a value at some point in the future.
+
+ A promise is an object has facilities for responding to when the promise if fulfilled with its value and for when something happens that means we can be sure that it will never be fulfilled. 
 
 Promises
 Investigate:
@@ -112,22 +119,23 @@ setTimeout(1000).then(handleTimeout);
 
 ```
 const promise = new Promise((resolve, reject) => {
+  element.addEventListener('click', handler);
+
+  function disable() {
+    element.removeEventListener('click', handler);
+    
+  }
 
   function handler () {
     resolve();
     disable();
   }
 
-  function disable() {
-    element.removeEventListener('click', handler);
-  }
-
-  element.addEventListener('click', handler);
-
   const id = setTimeout(() => {
     reject();
     disable();
   }, 4000);
+
 });
 
 promise.then(() => {
