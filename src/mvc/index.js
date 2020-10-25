@@ -55,7 +55,7 @@
   }
 
   return {
-    createProxy, createProxy,
+    createProxy: createProxy,
     createComponent: createComponent,
     Events: Events,
     utils: utils,
