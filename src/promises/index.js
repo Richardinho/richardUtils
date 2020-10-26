@@ -2,15 +2,15 @@
   'use strict';
 
 	if (typeof define === 'function' && define.amd) {
-		define([], function () {
-			return factory();
+		define(['../sundry'], function (sundry) {
+			return factory(sundry);
 		});
 	} else if (typeof module === 'object' && module.exports) {
-		module.exports = factory();
+		module.exports = factory(require('../sundry'));
 	} else {
-		root.MyPromise = factory();
+		root.MyPromise = factory(window.sundry);
 	}
-}(this, function () {
+}(this, function (sundry) {
   'use strict';
 
   /*
@@ -21,17 +21,13 @@
   var FULFILLED = 'fulfilled';
   var REJECTED = 'rejected';
 
+
   /*
    * Utility functions
    */
 
-  function isFunction (val) {
-    return val && typeof val === "function";
-  }
-
-  function isObject (val) {
-    return val && typeof val === "object";
-  }
+  var isFunction = sundry.isFunction;
+  var isObject = sundry.isObject;
 
   function isPromise(val) {
     return val instanceof Promise;

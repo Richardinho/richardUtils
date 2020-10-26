@@ -2,15 +2,30 @@
   'use strict';
 
   if (typeof define === 'function' && define.amd) {
-    define(['./events','./utils'], function (Events, utils) {
-      return factory(Events, utils);
+    define([
+      './events',
+      './utils',
+      './router'], function (
+        Events,
+        utils,
+        Router) {
+      return factory(
+        Events,
+        utils,
+        Router);
     });
   } else if (typeof module === 'object' && module.exports) {
-    module.exports = factory(require('./events'), require('./utils'));
+    module.exports = factory(
+      require('./events'),
+      require('./utils'),
+      require('./router'));
   } else {
-    root.mvc = factory(window.Events, window.utils);
+    root.mvc = factory(
+      window.Events,
+      window.utils,
+      window.Router);
   }
-}(this, function (Events, utils) {
+}(this, function (Events, utils, Router) {
 
 
   function createProxy(model, events, path) {
@@ -59,6 +74,7 @@
     createComponent: createComponent,
     Events: Events,
     utils: utils,
+    Router: Router,
   };
 
 }));

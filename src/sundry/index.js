@@ -26,17 +26,16 @@
       return Array.prototype.slice.call(arrayLike);
     },
 
-    isObject : function (obj) {
-      var type = typeof obj;
-      return type === 'function' || type === 'object' && !!obj;
-    },
-
     isString : function (val) {
       return typeof val === 'string';
     },
 
+    isObject: function (val) {
+      return val && typeof val === "object";
+    },
+
     isFunction : function (val) {
-      return typeof val === 'function';
+      return val && typeof val === 'function';
     },
 
     extend : function (target) {
