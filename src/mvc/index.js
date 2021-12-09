@@ -27,13 +27,14 @@
   }
 }(this, function (Events, utils, Router) {
 
+  'use strict';
 
   function createProxy(model, events, path) {
-    const obj = path ? model[path] : model;
+    var obj = path ? model[path] : model;
 
     var proxy = new Proxy(obj, {
-      set: (target, key, value) => {
-        setTimeout(() => {
+      set: function (target, key, value) {
+        setTimeout(function () {
           if (path) {
             events.fire(path + '.' + key, value);
           }
@@ -53,11 +54,11 @@
   function createComponent(proxy, component, events, path) {
 
     if (path) {
-      const wrappedEvents = {
-        fire: (key, value) => {
+      var wrappedEvents = {
+        fire: function (key, value) {
           events.fire(path + '.' + key, value);
         },
-        onPropertyChange: (key, handler) => {
+        onPropertyChange: function (key, handler) {
           events.onPropertyChange(key, handler, path);
         },
         onAllPropertyChanges: events.onAllPropertyChanges,

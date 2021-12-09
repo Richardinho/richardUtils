@@ -2,7 +2,7 @@
   'use strict';
 
   if (typeof define === 'function' && define.amd) {
-    define([], function (Events, utils) {
+    define([], function () {
       return factory();
     });
   } else if (typeof module === 'object' && module.exports) {
@@ -10,8 +10,10 @@
   } else {
     root.Router = factory();
   }
-}(this, function (Events, utils) {
+}(this, function () {
 
+  'use strict';
+  
   function Router(routeConfig) {
     this.routes = Object.keys(routeConfig).map(function (route) {
       return this.createRoute(route, routeConfig[route]);
@@ -62,7 +64,9 @@
       var params = route.exec(fragment).slice(1);
       return params.map(function(param, i) {
         // Don't decode the search params.
-        if (i === params.length - 1) return param || null;
+        if (i === params.length - 1) {
+          return param || null;
+        }
         return param ? decodeURIComponent(param) : null;
       });
     },

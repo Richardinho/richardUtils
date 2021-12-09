@@ -12,6 +12,8 @@
   }
 }(this, function () {
 
+  "use strict";
+
   function Events() {
     this.listeners = {};
   }
@@ -22,10 +24,10 @@
     }
 
     this.listeners.allChanges.push(handler);
-  }
+  };
 
   Events.prototype.onPropertyChange = function(key, handler, prefix) {
-    let _key;
+    var _key;
 
     if(prefix) {
       _key = prefix + '.' + key;
@@ -40,15 +42,19 @@
     this.listeners[_key].push(handler);
   };
 
-  Events.prototype.fire = function (key, value) {
+  Events.prototype.fire = function (key) {
     if (this.listeners[key]) {
-      this.listeners[key].forEach(handler => handler());
+      this.listeners[key].forEach(function(handler) {
+        handler(); 
+      });
     }
 
     if (this.listeners.allChanges) {
-      this.listeners.allChanges.forEach(handler => handler());
+      this.listeners.allChanges.forEach(function (handler) {
+        handler();
+      });
     }
-  }
+  };
 
   return Events;
 }));

@@ -15,7 +15,8 @@
   "scripts": {
     "test": "karma run",
     "aplus": "promises-aplus-tests src/promises/adapter.js",
-    "broken-aplus": "promises-aplus-tests src/promises/broken-promises/adapter.js"
+    "broken-aplus": "promises-aplus-tests src/promises/broken-promises/adapter.js",
+    "grunt": "grunt lint"
   },
   "main": "./src/index.js",
   "devDependencies": {

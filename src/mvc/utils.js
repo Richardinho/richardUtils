@@ -12,12 +12,16 @@
   }
 }(this, function () {
 
+  'use strict';
+
   function arrayPush(array, value) {
-    return [...array, value];
+    var newArray = array.slice();
+    newArray.push(value);
+    return newArray;
   }
 
   function arraySplice(array, index) {
-    return array.filter((_, i) => {
+    return array.filter(function(_, i) {
       return index !== i; 
     });
   }
