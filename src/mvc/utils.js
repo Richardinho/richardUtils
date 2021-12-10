@@ -20,8 +20,15 @@
     return newArray;
   }
 
+  function removeArrayItem(array, index) {
+    return array.filter(function(_, i) {
+      return i !== index;
+    });
+  }
+
   return {
     arrayPush: arrayPush,
+    removeArrayItem: removeArrayItem,
   };
 }));
 
