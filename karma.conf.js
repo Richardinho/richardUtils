@@ -16,9 +16,11 @@ module.exports = function(config) {
       'src/sundry/index.js',
       'src/dom-utils/index.js',
       'src/base-type/index.js',
+      'src/mvc/utils.js',
       'src/base-type/tests/base-type.spec.js',
       'src/dom-utils/tests/dom-utils.spec.js',
       'src/sundry/tests/sundry.spec.js',
+      'src/mvc/tests/utils.spec.js',
     ],
 
     // list of files to exclude
@@ -54,7 +56,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous

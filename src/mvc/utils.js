@@ -20,14 +20,7 @@
     return newArray;
   }
 
-  function arraySplice(array, index) {
-    return array.filter(function(_, i) {
-      return index !== i; 
-    });
-  }
-
   return {
-    arraySplice: arraySplice,
     arrayPush: arrayPush,
   };
 }));
